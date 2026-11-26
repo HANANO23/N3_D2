@@ -766,7 +766,7 @@
       },
       {
         kanji: "終点", kana: "しゅうてん", kr: "슈우텐",
-        accepts: ["슈우텐", "슈-텐", "슈텐"],
+        accepts: ["슈우텐", "슈-텐"],
         meaning: "종점", pos: "명사", tags: ["2025"], hasPhonetic: true,
         phoneticNote: "⚡ [장음 주의] 終(しゅう)는 '슈(しゅ)' + 'う(우)' 장음입니다! '슈우텐' 또는 '슈-텐'으로 길게 발음합니다.",
         structure: [
@@ -1079,7 +1079,7 @@
       },
       {
         kanji: "高価", kana: "こうか", kr: "코우카",
-        accepts: ["코우카", "코-카", "코카"],
+        accepts: ["코우카", "코-카"],
         meaning: "고가, 비싼 값", pos: "명사·형용동사 어간", tags: ["2023"], hasPhonetic: true,
         phoneticNote: "⚡ [장음 주의] 高(こう)는 '코(こ)' + 'う(우)' 장음입니다! '코우카' 또는 '코-카'로 길게 발음합니다.",
         structure: [
@@ -2147,8 +2147,6 @@
       const variants = new Set([base]);
       variants.add(base.replace(/우/g, "-"));
       variants.add(base.replace(/-/g, "우"));
-      if (base.endsWith("이")) variants.add(base.slice(0, -1) + "-");
-      if (base.endsWith("-")) variants.add(base.slice(0, -1) + "이");
       return variants;
     }
 
@@ -2318,7 +2316,7 @@
 
       const userVal = answerInput.value.trim();
       if (!userVal) {
-        answerInput.focus();
+        goNext();
         return;
       }
 
@@ -2352,6 +2350,15 @@
         bookmarks.add(item.kanji);
         safeSet(STORAGE_KEYS.bookmarks, Array.from(bookmarks));
         updateBookmarkButton(item.kanji);
+      const requeueOffset = 3;
+        const insertAt = Math.min(currentIndex + 1 + requeueOffset, currentList.length);
+        const alreadyUpcoming = currentList
+          .slice(currentIndex + 1, insertAt + 1)
+          .some((w) => w.kanji === item.kanji);
+
+        if (!alreadyUpcoming) {
+          currentList.splice(insertAt, 0, item);
+        }
       }
 
       safeSet(STORAGE_KEYS.mastery, masteryMap);
