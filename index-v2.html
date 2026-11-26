@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>일본어 한자읽기 마스터 (기출 + 필수어휘)</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 20px 16px 64px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      color: #0f172a;
+    }
+    header p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .sub-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+      font-size: 0.84rem;
+    }
+    .filter-group, .io-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    select, button {
+      font-family: inherit;
+      font-size: 0.86rem;
+      border-radius: 8px;
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    select:focus, button:focus, input:focus, textarea:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+    }
+    button:hover { background: #f1f5f9; }
+    button.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .stats {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .stats span b { color: var(--text); }
+    .streak-pill {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #fdba74;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 700;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .badge-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: #eff6ff;
+      color: var(--primary);
+    }
+    .badge.warn {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+    .badge.mastery-low {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+    .badge.mastery-mid {
+      background: #fef3c7;
+      color: #b45309;
+    }
+    .badge.mastery-high {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .kanji-display {
+      text-align: center;
+      font-size: 3.4rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin: 12px 0 8px;
+      color: #0f172a;
+      user-select: all;
+    }
+    .sub-hint {
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    input[type="text"] {
+      flex: 1;
+      font-size: 1.15rem;
+      padding: 12px 16px;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      padding: 0 22px;
+      font-size: 1rem;
+    }
+    .btn-primary:hover { background: var(--primary-hover); color: #fff; }
+
+    .feedback {
+      margin-top: 24px;
+      border-top: 2px dashed var(--border);
+      padding-top: 22px;
+      display: none;
+    }
+    .feedback.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-banner {
+      padding: 14px 18px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .result-banner.correct {
+      background: var(--success-bg);
+      color: #14532d;
+      border: 1px solid #86efac;
+    }
+    .result-banner.wrong {
+      background: var(--danger-bg);
+      color: #7f1d1d;
+      border: 1px solid #fca5a5;
+    }
+    .result-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .result-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+    .result-reading {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+    .btn-tts {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1px solid rgba(15, 23, 42, 0.2);
+      font-weight: 700;
+      padding: 8px 13px;
+      white-space: nowrap;
+    }
+    .btn-tts:hover { background: #f8fafc; }
+    .tts-status {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: -10px;
+      margin-bottom: 14px;
+      text-align: right;
+    }
+
+    .detail-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .detail-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+    }
+    .detail-box h3 {
+      margin: 0 0 6px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      letter-spacing: 0.03em;
+    }
+    .detail-box p, .detail-box ul {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+    .detail-box ul {
+      padding-left: 18px;
+    }
+    .phonetic-alert {
+      background: var(--warning-bg);
+      border-color: #fcd34d;
+    }
+    .phonetic-alert h3 { color: #b45309; }
+
+    .next-area {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-next {
+      flex: 1;
+      background: #0f172a;
+      color: #fff;
+      border: none;
+      padding: 13px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .btn-next:hover { background: #334155; color: #fff; }
+    .btn-bookmark {
+      padding: 13px 16px;
+      font-weight: 600;
+    }
+    .btn-bookmark.saved {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #b45309;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    }
+    .modal h2 {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+    }
+    .modal p.modal-desc {
+      margin: 0 0 16px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+    .form-row {
+      margin-bottom: 12px;
+    }
+    .form-row label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #334155;
+    }
+    .form-row input, .form-row textarea, .form-row select {
+      width: 100%;
+      text-align: left;
+      font-size: 0.92rem;
+      font-weight: 400;
+      padding: 9px 11px;
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .checkbox-row input { width: auto; }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .guide-footer {
+      margin-top: 24px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: #fff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .btn-danger-outline {
+      color: var(--danger);
+      border-color: #fca5a5;
+      background: #fff;
+    }
+    .btn-danger-outline:hover {
+      background: var(--danger-bg);
+    }
+    .custom-manage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 55vh;
+      overflow-y: auto;
+      margin-top: 8px;
+    }
+    .custom-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+    .custom-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .custom-item-title {
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: #0f172a;
+    }
+    .custom-item-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .custom-item-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .empty-custom-msg {
+      text-align: center;
+      padding: 28px 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: #f8fafc;
+      border-radius: 10px;
+      border: 1px dashed var(--border);
+    }
+
+    @media (max-width: 540px) {
+      .kanji-display { font-size: 2.6rem; }
+      .input-group { flex-direction: column; }
+      .btn-primary { padding: 12px; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🇯🇵 일본어 한자읽기 실전 트레이너</h1>
+      <p>기출어휘(2021~2025) + 핵심 추가어휘 + 사용자 단어장 | 한글 발음 입력 &amp; 즉시 해설</p>
+    </header>
+
+    <div class="toolbar">
+      <div class="filter-group">
+        <select id="categorySelect" title="출제 범위 선택">
+          <option value="ALL">전체 단어</option>
+          <option value="UNMASTERED">🧩 미숙달 단어만 (2회 미만 정답/오답)</option>
+          <option value="2025">2025 기출</option>
+          <option value="2024">2024 기출</option>
+          <option value="2023">2023 기출</option>
+          <option value="2022">2022 기출</option>
+          <option value="2021">2021 기출</option>
+          <option value="NEW">신규 추가 어휘</option>
+          <option value="CUSTOM">내 추가 단어</option>
+          <option value="PHONETIC">장음·촉음 주의 단어만</option>
+          <option value="WRONG">오답/북마크 복습장</option>
+        </select>
+        <button type="button" id="orderToggle" title="출제 순서 변경">🔀 랜덤 출제</button>
+      </div>
+      <div class="stats">
+        <span class="streak-pill" id="streakBadge">🔥 스트릭: 0</span>
+        <span>진행: <b id="statProgress">1/121</b></span>
+        <span>정답률: <b id="statAccuracy">0%</b></span>
+      </div>
+    </div>
+
+    <div class="sub-toolbar">
+      <div class="io-group">
+        <button type="button" id="openAddModalBtn">➕ 단어 추가</button>
+        <button type="button" id="openManageModalBtn" title="추가한 단어 편집 및 삭제">🗂️ 내 단어 관리</button>
+        <button type="button" id="exportJsonBtn" title="단어장 및 학습 기록 JSON 저장">💾 JSON 내보내기</button>
+        <button type="button" id="importJsonBtn" title="JSON 파일 불러오기">📂 JSON 불러오기</button>
+        <input type="file" id="importFileInput" accept=".json,application/json" style="display:none;" />
+      </div>
+      <div id="vocabCountSummary" style="color: var(--muted);">전체 121단어 (기본 121 + 내 추가 0)</div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main class="card">
+      <div class="badge-row">
+        <div class="badge-left">
+          <span class="badge" id="cardCategory">2025 기출</span>
+          <span class="badge mastery-low" id="cardMastery">숙달: 미학습</span>
+        </div>
+        <span class="badge warn" id="cardPhoneticBadge" style="display:none;">⚡ 장음/촉음 주의</span>
+      </div>
+
+      <div class="kanji-display" id="kanjiText">各駅</div>
+      <div class="sub-hint" id="posHint">품사: 명사 | 한글 발음을 입력하고 Enter를 누르세요</div>
+
+      <form class="input-group" id="quizForm">
+        <input type="text" id="answerInput" placeholder="예: 카쿠에키 / 쵸우칸 / 얏쿄쿠" autocomplete="off" />
+        <button type="submit" class="btn-primary" id="submitBtn">확인 (Enter)</button>
+      </form>
+
+      <div class="feedback" id="feedbackArea">
+        <div class="result-banner" id="resultBanner">
+          <div class="result-main">
+            <div class="result-title" id="resultTitle">⭕ 정답입니다!</div>
+            <div class="result-reading" id="resultReading">히라가나: かくえき | 표준 발음: 카쿠에키</div>
+          </div>
+          <button type="button" class="btn-tts" id="ttsBtn" title="일본어 음성 듣기 (단축키: R)">🔊 발음 듣기 (R)</button>
+        </div>
+        <div class="tts-status" id="ttsStatus"></div>
+
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h3>📖 뜻 및 품사</h3>
+            <p id="fbMeaning"></p>
+          </div>
+
+          <div class="detail-box phonetic-alert" id="fbPhoneticBox">
+            <h3>🔊 장음 · 촉음 · 청탁음 정밀 포인트</h3>
+            <p id="fbPhonetic"></p>
+          </div>
+
+          <div class="detail-box">
+            <h3>🧩 한자 좌우 · 구조 해부</h3>
+            <ul id="fbStructure"></ul>
+          </div>
+
+          <div class="detail-box">
+            <h3>💡 초급자 연상 기억법 &amp; 암기 팁</h3>
+            <p id="fbMnemonic"></p>
+          </div>
+        </div>
+
+        <div class="next-area">
+          <button type="button" class="btn-bookmark" id="bookmarkBtn">⭐ 복습장 저장</button>
+          <button type="button" id="cardEditCustomBtn" style="display:none; padding: 13px 14px; font-weight: 600;">✏️ 수정</button>
+          <button type="button" class="btn-danger-outline" id="cardDeleteCustomBtn" style="display:none; padding: 13px 14px; font-weight: 600;">🗑️ 삭제</button>
+          <button type="button" class="btn-next" id="nextBtn">다음 문제 (Enter) ➔</button>
+        </div>
+      </div>
+    </main>
+
+    <div class="guide-footer">
+      <strong>⌨️ 입력 &amp; 단축키 가이드:</strong><br/>
+      • <strong>장음 표기:</strong> <code>う</code> 장음은 <b>'우'</b> 또는 <b>'-'</b> 모두 정답 인정 (예: <code>朝刊</code> → <b>쵸우칸</b>, <b>쵸-칸</b>, <b>초우칸</b>, <b>초-칸</b> 모두 정답). <code>い</code> 장음은 <b>'이'</b> 또는 <b>'-'</b> 인정.<br/>
+      • <strong>촉음(っ) 표기:</strong> 받침 <code>ㅅ</code> 또는 뒤 자음 강조 모두 인정 (예: <code>薬局</code> → <b>얏쿄쿠</b> / <b>약쿄쿠</b>).<br/>
+      • <strong>단축키:</strong> 입력 후 <code>Enter</code>로 채점 → 해설 확인 후 <code>R</code>로 발음 듣기, <code>Enter</code>로 다음 문제 이동.
+    </div>
+  </div>
+
+  <!-- 단어 추가 / 편집 모달 -->
+  <div class="modal-backdrop" id="addModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+    <div class="modal">
+      <h2 id="addModalTitle">➕ 새 단어 추가</h2>
+      <p class="modal-desc" id="addModalDesc">추가한 단어는 현재 브라우저에 저장되며, 'JSON 내보내기'로 파일 백업할 수 있습니다.</p>
+      <form id="addWordForm">
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label for="newKanji">한자/표기 *</label>
+            <input type="text" id="newKanji" required placeholder="예: 駅員" />
+          </div>
+          <div class="form-row">
+            <label for="newKana">히라가나 *</label>
+            <input type="text" id="newKana" required placeholder="예: えきいん" />
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label for="newKr">한글 발음 *</label>
+            <input type="text" id="newKr" required placeholder="예: 에키인" />
+          </div>
+          <div class="form-row">
+            <label for="newPos">품사</label>
+            <input type="text" id="newPos" value="명사" placeholder="예: 명사, い형용사" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="newAccepts">추가 인정 발음 (쉼표로 구분, 선택)</label>
+          <input type="text" id="newAccepts" placeholder="예: 에키인, 에끼인" />
+        </div>
+        <div class="form-row">
+          <label for="newMeaning">뜻 *</label>
+          <input type="text" id="newMeaning" required placeholder="예: 역무원" />
+        </div>
+        <div class="form-row">
+          <label for="newPhonetic">장음 · 촉음 · 청탁음 포인트</label>
+          <input type="text" id="newPhonetic" placeholder="예: 장음·촉음 없는 3박자 음독 명사입니다." />
+        </div>
+        <div class="form-row">
+          <label for="newStructure">한자 구조 분석 (줄바꿈으로 여러 줄 입력 가능)</label>
+          <textarea id="newStructure" rows="2" placeholder="예: 駅(역 역) + 員(인원 원) → 역에서 일하는 직원"></textarea>
+        </div>
+        <div class="form-row">
+          <label for="newMnemonic">초급자 연상 기억법 &amp; 암기 팁</label>
+          <textarea id="newMnemonic" rows="2" placeholder="예: 역(에키)에서 일하는 인원(인) = 에키인!"></textarea>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="newHasPhonetic" />
+          <label for="newHasPhonetic" style="margin:0;">장음/촉음 주의 배지 표시</label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancelAddModalBtn">취소</button>
+          <button type="submit" class="btn-primary" id="saveWordSubmitBtn" style="padding: 8px 16px;">단어 저장</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 내 추가 단어 관리(편집/삭제) 모달 -->
+  <div class="modal-backdrop" id="manageModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="manageModalTitle">
+    <div class="modal">
+      <h2 id="manageModalTitle">🗂️ 내 추가 단어 관리</h2>
+      <p class="modal-desc">직접 추가한 단어를 수정하거나 삭제할 수 있습니다. 삭제 시 해당 단어의 복습장 및 숙달 기록도 함께 정리됩니다.</p>
+      <div id="customManageList" class="custom-manage-list"></div>
+      <div class="modal-actions">
+        <button type="button" id="addFromManageBtn" class="btn-primary" style="padding: 8px 14px;">➕ 새 단어 추가</button>
+        <button type="button" id="closeManageModalBtn">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE_VOCAB_DATA = [
+      // ================= 2025 기출 =================
+      {
+        kanji: "移す", kana: "うつす", kr: "우츠스",
+        accepts: ["우츠스", "우쓰스"],
+        meaning: "옮기다", pos: "타동사 1그룹", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 단어입니다. '우-츠-스'로 한 음절씩 또박또박 발음합니다.",
+        structure: [
+          "좌우 구조: 왼쪽 禾(벼 화) + 오른쪽 多(많을 다)",
+          "移(옮길 이): 벼(禾)가 많아져서(多) 다른 논으로 옮겨 심는 모습에서 유래",
+          "す(스): 타동사 어미 (자동사는 移る[우츠루: 옮겨지다])"
+        ],
+        mnemonic: "물건을 다른 곳으로 '우츠(우르르) 스윽' 옮긴다고 연상하세요! 写す(베끼다/찍다)와 발음이 똑같으니 한자(禾+多)로 구별합니다."
+      },
+      {
+        kanji: "帯", kana: "おび", kr: "오비",
+        accepts: ["오비"],
+        meaning: "허리띠, 띠", pos: "명사", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 명사입니다. 탁음 '비(び)'에 주의하세요.",
+        structure: [
+          "상하 구조: 위쪽 世/廿(허리띠 장식 모양) + 가운데 冖(덮을 멱) + 아래 巾(수건 건)",
+          "帯(띠 대): 허리에 두르는 천(巾)과 장식을 본뜬 글자 (훈독: おび / 음독: たい)"
+        ],
+        mnemonic: "기모노 허리에 매는 넓은 띠를 한국에서도 '오비'라고 부릅니다. 책 겉표지에 두르는 종이 띠도 오비(帯)입니다."
+      },
+      {
+        kanji: "完全だ", kana: "かんぜんだ", kr: "칸젠다",
+        accepts: ["칸젠다", "칸젠"],
+        meaning: "완전하다", pos: "형용동사(な형용사)", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음은 없지만 받침 ん(ㄴ)이 두 번 들어가며, 全은 탁음 '젠(ぜん)'으로 읽습니다.",
+        structure: [
+          "完(완전할 완): 위 宀(집 면) + 아래 元(으뜸 원) → 집 안에 으뜸으로 다 갖춤 [음독: かん]",
+          "全(온전할 전): 위 入/人(사람 인) + 아래 王(옥 옥) → 흠집 없는 온전한 옥 [음독: ぜん]"
+        ],
+        mnemonic: "한국어 한자음 '완전'에서 '완→칸', '전→젠'으로 바뀝니다. '다(だ)'를 빼고 '칸젠'만 입력해도 정답 처리됩니다."
+      },
+      {
+        kanji: "苦しい", kana: "くるしい", kr: "쿠루시이",
+        accepts: ["쿠루시이", "쿠루시-", "쿠루시"],
+        meaning: "힘들다, 괴롭다", pos: "い형용사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "어미 'しい(시이)'는 '이'가 두 번 이어지는 모음 연속(장음처럼 길게 발음)입니다. '쿠루시이' 또는 '쿠루시-'로 표기하세요.",
+        structure: [
+          "상하 구조: 위 艹(풀 초) + 아래 古(옛 고)",
+          "苦(쓸 고/괴로울 고): 오래된(古) 풀(艹)처럼 맛이 쓰고 마음이 괴롭다는 뜻 [훈독: くる-しい]"
+        ],
+        mnemonic: "너무 괴로워서 '쿠르르~ 시이~' 하고 신음 소리가 나온다고 외워보세요. 辛い(つらい: 괴롭다)와 짝꿍 단어입니다."
+      },
+      {
+        kanji: "呼吸", kana: "こきゅう", kr: "코큐우",
+        accepts: ["코큐우", "코큐-", "코큐"],
+        meaning: "호흡", pos: "명사·する동사", tags: ["2025", "2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 吸(きゅう)는 '큐(きゅ)' 뒤에 'う(우)'가 붙는 장음입니다! '코큐우' 또는 '코큐-'로 길게 뺍니다.",
+        structure: [
+          "呼(부를 호): 좌 口(입 구) + 우 乎(어조사 호) → 입으로 숨을 내뱉음 [음독: こ]",
+          "吸(마실 흡): 좌 口(입 구) + 우 及(미칠 급) → 입으로 숨을 들이마심 [음독: きゅう]"
+        ],
+        mnemonic: "호흡은 '코(呼)'로 내쉬고 '큐~(吸)' 하고 들이마시는 것! 2021년과 2025년에 두 번이나 출제된 단골 어휘입니다."
+      },
+      {
+        kanji: "困る", kana: "こまる", kr: "코마루",
+        accepts: ["코마루"],
+        meaning: "곤란하다", pos: "자동사 1그룹", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 동사입니다.",
+        structure: [
+          "에워쌀 구조: 바깥 囗(큰입구 몸/울타리) + 안 木(나무 목)",
+          "困(곤란할 곤): 나무(木)가 사방 울타리(囗)에 갇혀 자라지 못하고 곤란해하는 모습 [훈독: こま-る]"
+        ],
+        mnemonic: "울타리 안에 갇혀서 곤란할 때 '코마(꼬마)루~' 하고 울상을 짓는 모습을 떠올리세요. 일본 회화에서 '코맛타나(곤란하네)'로 아주 많이 씁니다."
+      },
+      {
+        kanji: "地面", kana: "じめん", kr: "지멘",
+        accepts: ["지멘"],
+        meaning: "지면, 땅바닥", pos: "명사", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 地는 'ち'가 아니라 탁음 'じ(지)'로 읽는 것에 주의하세요.",
+        structure: [
+          "地(땅 지): 좌 土(흙 토) + 우 也(어조사 야) [음독: じ / ち]",
+          "面(낯 면/표면 면): 땅의 겉면 [음독: めん]"
+        ],
+        mnemonic: "지진(地震: 지신)과 마찬가지로 땅의 표면을 뜻할 때 地는 탁음 '지(じ)'로 읽습니다. '지멘(지면)'은 한국어 발음과 거의 같습니다."
+      },
+      {
+        kanji: "終点", kana: "しゅうてん", kr: "슈우텐",
+        accepts: ["슈우텐", "슈-텐", "슈텐"],
+        meaning: "종점", pos: "명사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 終(しゅう)는 '슈(しゅ)' + 'う(우)' 장음입니다! '슈우텐' 또는 '슈-텐'으로 길게 발음합니다.",
+        structure: [
+          "終(마칠 종): 좌 糸(실 사) + 우 冬(겨울 동) → 일 년의 마지막 계절인 겨울처럼 끝남 [음독: しゅう]",
+          "点(점 점): 끝나는 지점 [음독: てん]"
+        ],
+        mnemonic: "버스나 전철의 마지막 역(종점)에 도착하면 '슈우~(휴~) 텐(도착)!' 하고 안도한다고 외우세요. 반대말은 始発(시하츠: 첫차)."
+      },
+      {
+        kanji: "身長", kana: "しんちょう", kr: "신쵸우",
+        accepts: ["신쵸우", "신쵸-", "신초우", "신초-", "신쵸"],
+        meaning: "신장, 키", pos: "명사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 長(ちょう)는 '쵸(ちょ)' + 'う(우)' 장음입니다! '신쵸우' 또는 '신쵸-'로 표기하세요.",
+        structure: [
+          "身(몸 신): 사람이 몸을 세운 모습 [음독: しん]",
+          "長(길 장): 긴 머리카락을 늘어뜨린 노인의 모습 → 길다 [음독: ちょう]"
+        ],
+        mnemonic: "신장(키)을 잴 때는 허리를 쭉 펴야 하므로 뒤 글자 長을 '쵸우~(쭉~)' 길게 발음합니다."
+      },
+      {
+        kanji: "西洋", kana: "せいよう", kr: "세이요우",
+        accepts: ["세이요우", "세이요-", "세-요우", "세-요-", "세요"],
+        meaning: "서양", pos: "명사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 西(せい: 세이/세-)와 洋(よう: 요우/요-) 모두 장음입니다! '세이요우' 또는 '세-요-'로 표기하세요.",
+        structure: [
+          "西(서녘 서): 새가 둥지에 깃드는 해 질 녘 방향 [음독: せい / さい]",
+          "洋(큰바다 양): 좌 氵(물 수) + 우 羊(양 양) → 넓고 큰 바다 [음독: よう]"
+        ],
+        mnemonic: "동양은 東洋(토우요우), 서양은 西洋(세이요우)! 둘 다 앞뒤 모두 장음이 들어가는 쌍둥이 단어입니다."
+      },
+      {
+        kanji: "他人", kana: "たにん", kr: "타닌",
+        accepts: ["타닌"],
+        meaning: "타인, 남", pos: "명사", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 단어입니다. 人을 'じん'이 아니라 'にん(닌)'으로 읽습니다.",
+        structure: [
+          "他(다를 타): 좌 亻(사람 인) + 우 也(어조사 야) → 내가 아닌 다른 사람 [음독: た]",
+          "人(사람 인): 두 발로 선 사람 [음독: にん / じん]"
+        ],
+        mnemonic: "한국어 '타인'에서 '인→닌'만 바뀌어 '타닌'이 됩니다. 가족이 아닌 남을 가리킬 때 씁니다."
+      },
+      {
+        kanji: "泣く", kana: "なく", kr: "나쿠",
+        accepts: ["나쿠"],
+        meaning: "(사람이) 울다", pos: "자동사 1그룹", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 氵(물 수) + 오른쪽 立(설 립)",
+          "泣(울 읍): 서서(立) 눈물(氵)을 흘리며 울다는 뜻 [훈독: な-く]"
+        ],
+        mnemonic: "사람이 눈물 흘리며 우는 건 泣く(나쿠), 새나 동물이 우는 건 鳴く(나쿠)! 한자 왼쪽에 물수변(氵)이 있으면 사람 눈물입니다."
+      },
+      {
+        kanji: "涙", kana: "なみだ", kr: "나미다",
+        accepts: ["나미다"],
+        meaning: "눈물", pos: "명사", tags: ["2025"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 명사입니다. 마지막 '다(だ)' 탁음에 주의하세요.",
+        structure: [
+          "좌우 구조: 왼쪽 氵(물 수) + 오른쪽 戻(어그러질 려/돌아올 려)",
+          "涙(눈물 루): 눈에서 흘러나오는 물(氵) [훈독: なみだ]"
+        ],
+        mnemonic: "일본 노래 제목이나 가사에 가장 많이 나오는 단어 중 하나! '나미다(눈물)'가 흐른다고 외워두세요."
+      },
+      {
+        kanji: "腹痛", kana: "ふくつう", kr: "후쿠츠우",
+        accepts: ["후쿠츠우", "후쿠츠-", "후쿠쓰우", "후쿠쓰-", "후쿠츠"],
+        meaning: "복통, 배탈", pos: "명사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 痛(つう)는 '츠(つ)' + 'う(우)' 장음입니다! '후쿠츠우' 또는 '후쿠츠-'로 길게 발음합니다.",
+        structure: [
+          "腹(배 복): 좌 月(육달 월/몸) + 우 复(돌아올 복) → 몸의 배 부분 [음독: ふく]",
+          "痛(아플 통): 疒(병질 엄) + 甬(길 용) → 병으로 쑤시고 아픔 [음독: つう]"
+        ],
+        mnemonic: "두통은 頭痛(즈츠우), 복통은 腹痛(후쿠츠우)! 아플 痛자는 모두 '츠우~(으으 아파!)' 장음으로 끝납니다."
+      },
+      {
+        kanji: "薬局", kana: "やっきょく", kr: "얏쿄쿠",
+        accepts: ["얏쿄쿠", "약쿄쿠", "얏쿄꾸", "약쿄꾸"],
+        meaning: "약국", pos: "명사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "⚡ [촉음 주의] 薬(やく)의 'く'가 뒤의 局(きょく) 앞을 만나 촉음 'っ'로 변합니다! '얏쿄쿠' 또는 '약쿄쿠'로 끊어 읽습니다.",
+        structure: [
+          "薬(약 약): 위 艹(풀 초) + 아래 楽(즐거울 락) → 몸을 편하게 해주는 풀 [음독: やく → やっ]",
+          "局(판 국): 기관이나 가게를 뜻함 [음독: きょく]"
+        ],
+        mnemonic: "약(야쿠) + 국(쿄쿠)이 합쳐지면서 발음하기 편하게 '얏쿄쿠(약쿄쿠)'로 꺾입니다. 일본 여행 가면 간판에서 가장 흔히 보는 한자입니다."
+      },
+      {
+        kanji: "郵便", kana: "ゆうびん", kr: "유우빈",
+        accepts: ["유우빈", "유-빈", "유빈"],
+        meaning: "우편", pos: "명사", tags: ["2025"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 郵(ゆう)는 '유(ゆ)' + 'う(우)' 장음입니다! '유우빈' 또는 '유-빈'으로 표기하세요.",
+        structure: [
+          "郵(우편 우): 좌 垂(드리울 수) + 우 阝(고을 읍) → 마을 간 소식을 전함 [음독: ゆう]",
+          "便(편할 편/소식 변): 소식이나 교통편 [음독: びん]"
+        ],
+        mnemonic: "우체국은 郵便局(유우빈쿄쿠)! 앞은 장음 '유우', 뒤는 탁음 '빈'입니다."
+      },
+
+      // ================= 2024 기출 =================
+      {
+        kanji: "返す", kana: "かえす", kr: "카에스",
+        accepts: ["카에스"],
+        meaning: "돌려주다", pos: "타동사 1그룹", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 동사입니다. '카에(かえ)'를 이중모음으로 정확히 읽습니다.",
+        structure: [
+          "반에워쌀 구조: 辶(쉬엄쉬엄 갈 착) + 反(돌이킬 반)",
+          "返(돌아올 반): 왔던 길을 되돌려 보낸다는 뜻 [훈독: かえ-す]"
+        ],
+        mnemonic: "집에 '돌아가다'는 帰る(카에루), 빌린 물건을 '돌려주다'는 返す(카에스)! 어미가 '스(す)'로 끝나면 남에게 해주는 타동사입니다."
+      },
+      {
+        kanji: "家具", kana: "かぐ", kr: "카구",
+        accepts: ["카구"],
+        meaning: "가구", pos: "명사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 具는 탁음 'ぐ(구)'로 읽습니다.",
+        structure: [
+          "家(집 가): 위 宀(집 면) + 아래 豕(돼지 시) [음독: か]",
+          "具(갖출 구): 집 안에 갖추어 놓은 도구 [음독: ぐ]"
+        ],
+        mnemonic: "한국어 발음 '가구'와 토씨 하나 안 틀리고 똑같습니다! 일본에서도 똑같이 '카구'라고 합니다."
+      },
+      {
+        kanji: "加熱", kana: "かねつ", kr: "카네츠",
+        accepts: ["카네츠", "카네쓰"],
+        meaning: "가열", pos: "명사·する동사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 음독 명사입니다.",
+        structure: [
+          "加(더할 가): 좌 力(힘 력) + 우 口(입 구) [음독: か]",
+          "熱(더울 열): 위 埶(심을 예) + 아래 灬(불 화) → 불을 더해 뜨겁게 함 [음독: ねつ]"
+        ],
+        mnemonic: "전자레인지 도시락에 '加熱(카네츠)'라고 적혀 있으면 '데우기(가열)'라는 뜻입니다. 열(熱)은 '네츠'로 읽습니다."
+      },
+      {
+        kanji: "感情的", kana: "かんじょうてき", kr: "칸죠우테키",
+        accepts: ["칸죠우테키", "칸죠-테키", "칸조우테키", "칸조-테키", "칸죠테키"],
+        meaning: "감정적", pos: "형용동사(な형용사) / 〜的", tags: ["2024"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 情(じょう)는 '죠(じょ)' + 'う(우)' 장음입니다! '칸죠우테키' 또는 '칸죠-테키'로 길게 발음합니다.",
+        structure: [
+          "感(느낄 감): 마음(心)으로 느낌 [음독: かん]",
+          "情(뜻 정): 좌 忄(마음 심) + 우 青(푸를 청) [음독: じょう]",
+          "的(과녁 적): '~적'을 만드는 접미사 [음독: てき]"
+        ],
+        mnemonic: "감정(感情: 칸죠우) + 적(的: 테키)! '情'자가 들어가면 장음 '죠우'가 된다는 걸 기억하세요."
+      },
+      {
+        kanji: "基本", kana: "きほん", kr: "키혼",
+        accepts: ["키혼"],
+        meaning: "기본", pos: "명사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 음독 명사입니다.",
+        structure: [
+          "基(터 기): 위 其(그 기) + 아래 土(흙 토) → 흙으로 다진 기초 [음독: き]",
+          "本(근본 본): 나무(木) 뿌리 부분에 표시한 글자 [음독: ほん]"
+        ],
+        mnemonic: "기(基=키) + 본(本=혼) = 키혼! 초급 단계에서 가장 자주 쓰이는 필수 단어입니다."
+      },
+      {
+        kanji: "配る", kana: "くばる", kr: "쿠바루",
+        accepts: ["쿠바루"],
+        meaning: "나누어 주다, 배포하다", pos: "타동사 1그룹", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 가운데 글자 'ば(바)' 탁음에 주의하세요.",
+        structure: [
+          "좌우 구조: 왼쪽 酉(닭 유/술병) + 오른쪽 己(몸 기)",
+          "配(나눌 배): 여러 사람에게 술을 골고루 나누어 주다는 뜻 [훈독: くば-る]"
+        ],
+        mnemonic: "전단지나 유인물을 사람들에게 '쿠바루(나누어 주다)'! 택배(宅配: 타쿠하이)에 들어가는 그 한자입니다."
+      },
+      {
+        kanji: "最初", kana: "さいしょ", kr: "사이쇼",
+        accepts: ["사이쇼", "사-쇼"],
+        meaning: "최초, 처음", pos: "명사", tags: ["2024"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음/이중모음 주의] 最(さい)는 '사이'로 발음하며, 뒤에 쇼(しょ)는 장음이 아닙니다('사이쇼우' X).",
+        structure: [
+          "最(가장 최): 위 日/曰 + 아래 取(취할 취) [음독: さい]",
+          "初(처음 초): 좌 衤(옷 의) + 우 刀(칼 도) → 옷을 만들기 위해 처음 가위질함 [음독: しょ]"
+        ],
+        mnemonic: "처음은 最初(사이쇼), 마지막은 最後(사이고)! 둘 다 '사이-'로 시작합니다."
+      },
+      {
+        kanji: "主要だ", kana: "しゅようだ", kr: "슈요우다",
+        accepts: ["슈요우다", "슈요-다", "슈요우", "슈요-", "슈요"],
+        meaning: "주요하다", pos: "형용동사(な형용사)", tags: ["2024"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 要(よう)는 '요(よ)' + 'う(우)' 장음입니다! '슈요우다' 또는 '슈요-다'로 길게 뺍니다.",
+        structure: [
+          "主(주인 주): 촛불 심지가 타오르는 모양 → 중심 [음독: しゅ]",
+          "要(요긴할 요): 허리처럼 중요한 핵심 [음독: よう]"
+        ],
+        mnemonic: "중요하다(重要だ: 쥬우요우다)와 뒷글자가 같습니다. '要'는 항상 장음 '요우(よう)'로 읽습니다."
+      },
+      {
+        kanji: "石油", kana: "せきゆ", kr: "세키유",
+        accepts: ["세키유"],
+        meaning: "석유", pos: "명사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 단어입니다. '세키유우'가 아니라 짧은 '세키유'입니다.",
+        structure: [
+          "石(돌 석): 절벽 아래 굴러떨어진 돌 [음독: せき]",
+          "油(기름 유): 좌 氵(물 수) + 우 由(말미암을 유) [음독: ゆ]"
+        ],
+        mnemonic: "돌(石=세키)에서 나오는 기름(油=유) = 세키유! 간장(醤油: 쇼우유)의 '유'와 같은 글자입니다."
+      },
+      {
+        kanji: "適当だ", kana: "てきとうだ", kr: "테키토우다",
+        accepts: ["테키토우다", "테키토-다", "테키토우", "테키토-", "테키토"],
+        meaning: "적당하다, 알맞다 (또는 대충이다)", pos: "형용동사(な형용사)", tags: ["2024"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 当(とう)는 '토(と)' + 'う(우)' 장음입니다! '테키토우다' 또는 '테키토-다'로 표기하세요.",
+        structure: [
+          "適(맞을 적): 辶(갈 착) + 啇(밑동 적) → 딱 들어맞다 [음독: てき]",
+          "当(마땅할 당): 밭에 딱 맞게 해당함 [음독: とう]"
+        ],
+        mnemonic: "도시락(弁当: 벤토우)의 '当'과 같은 글자! '적(테키) + 당(토우)'으로 장음을 살려 읽습니다."
+      },
+      {
+        kanji: "残す", kana: "のこす", kr: "노코스",
+        accepts: ["노코스"],
+        meaning: "남기다", pos: "타동사 1그룹", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 歹(죽을 사 변) + 오른쪽 戋(해칠 잔)",
+          "残(남을 잔): 다 쓰고 뒤에 남아 있는 것 [훈독: のこ-す]"
+        ],
+        mnemonic: "밥을 남기지 말라고 할 때 '노코사나이데(남기지 마)!'라고 합니다. 자동사 '남다'는 残る(노코루), 명사 '나머지'는 残り(노코리, 2021 기출)."
+      },
+      {
+        kanji: "深い", kana: "ふかい", kr: "후카이",
+        accepts: ["후카이"],
+        meaning: "깊다", pos: "い형용사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 氵(물 수) + 오른쪽 窅/深(깊을 심)",
+          "深(깊을 심): 물(氵) 속 깊은 곳까지 손을 뻗어 재는 모습 [훈독: ふか-い]"
+        ],
+        mnemonic: "물이 깊으면 '후카~이(깊다)' 하고 숨을 내쉰다고 기억하세요. 반대말은 浅い(아사이: 얕다)."
+      },
+      {
+        kanji: "父母", kana: "ふぼ", kr: "후보",
+        accepts: ["후보"],
+        meaning: "부모, 아버지와 어머니", pos: "명사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 음독 명사입니다. 母는 'ぼ(보)' 탁음입니다.",
+        structure: [
+          "父(아버지 부): 손에 도끼나 지팡이를 든 가장의 모습 [음독: ふ / 훈독: ちち]",
+          "母(어머니 모): 아이에게 젖을 먹이는 어머니의 모습 [음독: ぼ / 훈독: はは]"
+        ],
+        mnemonic: "음독으로 읽으면 '후보(父母)', 훈독으로 읽으면 '치치하하(父母)'! 시험에는 짧은 음독 '후보'가 자주 나옵니다."
+      },
+      {
+        kanji: "包丁", kana: "ほうちょう", kr: "호우쵸우",
+        accepts: ["호우쵸우", "호-쵸우", "호우쵸-", "호-쵸-", "호우초우", "호-초-", "호쵸"],
+        meaning: "부엌칼, 식칼", pos: "명사", tags: ["2024"], hasPhonetic: true,
+        phoneticNote: "⚡ [청탁음+장음 초고난도 주의] 앞 글자 包는 탁음(ぼう)이 아니라 청음 'ほう(호우)'입니다! 뒤의 丁도 장음 'ちょう(쵸우)'입니다.",
+        structure: [
+          "包(쌀 포): 태아를 감싼 모습 [음독: ほう]",
+          "丁(고무래 정): 칼날이나 도구를 뜻함 [음독: ちょう]"
+        ],
+        mnemonic: "가장 많이 틀리는 함정 단어 1순위! '보우쵸우'가 아니라 '호우쵸우(청음)'입니다. 칼질할 때 '호우~ 쵸우~' 하고 조심한다고 외우세요!"
+      },
+      {
+        kanji: "横", kana: "よこ", kr: "요코",
+        accepts: ["요코"],
+        meaning: "옆, 가로", pos: "명사", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 명사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 木(나무 목) + 오른쪽 黄(누를 황)",
+          "横(가로 횡): 나무(木)를 가로로 눕혀 놓은 빗장 [훈독: よこ / 음독: おう]"
+        ],
+        mnemonic: "일본 지명 '요코하마(横浜)'의 요코가 바로 '옆(가로)'이라는 뜻입니다. 세로는 縦(타테)."
+      },
+      {
+        kanji: "割る", kana: "わる", kr: "와루",
+        accepts: ["와루"],
+        meaning: "깨뜨리다, 나누다", pos: "타동사 1그룹", tags: ["2024"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 害(해칠 해) + 오른쪽 刂(선칼도 방)",
+          "割(나눌 할): 칼(刂)로 물건을 쪼개어 나누다는 뜻 [훈독: わ-る]"
+        ],
+        mnemonic: "접시나 유리컵을 '와루(와장창)!' 깨뜨린다고 외우세요. 저절로 깨지다는 割れる(와레루), 할인(세일)은 割引(와리비키)입니다."
+      },
+
+      // ================= 2023 기출 =================
+      {
+        kanji: "疑う", kana: "うたがう", kr: "우타가우",
+        accepts: ["우타가우"],
+        meaning: "의심하다", pos: "타동사 1그룹", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 훈독 동사입니다. 세 번째 'が(가)' 탁음에 주의하세요.",
+        structure: [
+          "좌우 구조: 왼쪽 匕+矢 + 오른쪽 矛+疋",
+          "疑(의심할 의): 갈림길에서 어느 쪽으로 갈지 망설이며 의심하는 모습 [훈독: うたが-う]"
+        ],
+        mnemonic: "상대방이 거짓말을 하면 '우타가우(웃다가도 의심한다)'라고 연상해 보세요!"
+      },
+      {
+        kanji: "裏", kana: "うら", kr: "우라",
+        accepts: ["우라"],
+        meaning: "뒤, 뒷면, 안쪽", pos: "명사", tags: ["2023", "2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 명사입니다.",
+        structure: [
+          "상하 조합: 衣(옷 의) 안에 里(마을 리)가 들어간 형태",
+          "裏(속 리/뒤 리): 옷의 안감처럼 보이지 않는 뒷면 [훈독: うら]"
+        ],
+        mnemonic: "종이의 앞면은 表(오모테), 뒷면은 裏(우라)! 2021년과 2023년 두 번이나 출제된 초빈출 어휘입니다."
+      },
+      {
+        kanji: "月末", kana: "げつまつ", kr: "게츠마츠",
+        accepts: ["게츠마츠", "게쓰마쓰"],
+        meaning: "월말", pos: "명사", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 명사입니다. 月은 'がつ'가 아니라 'げつ(게츠)'로 읽습니다.",
+        structure: [
+          "月(달 월): 초승달 모양 [음독: げつ]",
+          "末(끝 말): 나무(木)의 가장 윗부분(끝)을 표시한 글자 [음독: まつ]"
+        ],
+        mnemonic: "주말은 週末(슈우마츠), 월말은 月末(게츠마츠), 연말은 年末(넨마츠)! 끝 末은 모두 '마츠'로 읽습니다."
+      },
+      {
+        kanji: "高価", kana: "こうか", kr: "코우카",
+        accepts: ["코우카", "코-카", "코카"],
+        meaning: "고가, 비싼 값", pos: "명사·형용동사 어간", tags: ["2023"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 高(こう)는 '코(こ)' + 'う(우)' 장음입니다! '코우카' 또는 '코-카'로 길게 발음합니다.",
+        structure: [
+          "高(높을 고): 높은 누각의 모습 [음독: こう]",
+          "価(값 가): 좌 亻(사람 인) + 우 西/賈(값 가) [음독: か]"
+        ],
+        mnemonic: "고교(高校: 코우코우)의 高와 발음이 같습니다. 반대말인 '저가(싼 값)'는 安価(안카)입니다."
+      },
+      {
+        kanji: "小型", kana: "こがた", kr: "코가타",
+        accepts: ["코가타"],
+        meaning: "소형", pos: "명사·형용동사 어간", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 型(かた)이 뒤로 오면서 연탁 현상으로 'がた(가타)' 탁음이 됩니다.",
+        structure: [
+          "小(작을 소): 작은 알갱이 세 개 [훈독: こ / 음독: しょう]",
+          "型(모형 형): 흙(土)으로 만든 거푸집 틀 [훈독: かた → がた]"
+        ],
+        mnemonic: "대형은 大型(오오가타), 중형은 中型(츄우가타), 소형은 小型(코가타)! 모두 뒤가 탁음 '가타'로 바뀝니다."
+      },
+      {
+        kanji: "断る", kana: "ことわる", kr: "코토와루",
+        accepts: ["코토와루"],
+        meaning: "거절하다, 사양하다", pos: "타동사 1그룹", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 훈독 동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 㡭(이을 계) + 오른쪽 斤(도끼 근)",
+          "断(끊을 단): 도끼(斤)로 실을 끊어내듯 요청을 거절하다 [훈독: ことわ-る]"
+        ],
+        mnemonic: "제안을 정중히 거절할 때 '코토와루(단호히 끊다)'라고 합니다. 원래 말(言: 코토)을 가른다는 뜻에서 왔습니다."
+      },
+      {
+        kanji: "産業", kana: "さんぎょう", kr: "산교우",
+        accepts: ["산교우", "산교-", "산교"],
+        meaning: "산업", pos: "명사", tags: ["2023"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 業(ぎょう)는 '교(ぎょ)' + 'う(우)' 장음입니다! '산교우' 또는 '산교-'로 길게 뺍니다.",
+        structure: [
+          "産(낳을 산): 생산하다 [음독: さん]",
+          "業(일 업): 악기를 매단 나무틀 → 전문적인 일 [음독: ぎょう]"
+        ],
+        mnemonic: "수업(授業: 쥬교우), 졸업(卒業: 소츠교우)처럼 業(업)이 들어가면 장음 '교우'로 끝납니다."
+      },
+      {
+        kanji: "選手", kana: "せんしゅ", kr: "센슈",
+        accepts: ["센슈"],
+        meaning: "선수", pos: "명사", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "⚡ [단음 주의] '센슈우(先週: 지난주)'와 헷갈리기 쉽습니다! 선수는 장음이 없는 짧은 '센슈(せんしゅ)'입니다.",
+        structure: [
+          "選(가릴 선): 辶(갈 착) + 巽(선택할 손) → 뽑다 [음독: せん]",
+          "手(손 수): 다섯 손가락 모양 → 어떤 일을 하는 사람 [음독: しゅ]"
+        ],
+        mnemonic: "지난주(先週: 센슈우)는 길게, 운동선수(選手: 센슈)는 짧게! 운동선수는 발이 빨라서 발음도 짧게 끊는다고 기억하세요."
+      },
+      {
+        kanji: "退院", kana: "たいいん", kr: "타이인",
+        accepts: ["타이인"],
+        meaning: "퇴원", pos: "명사·する동사", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "퇴(たい)의 'い'와 원(いん)의 'い'가 겹쳐 '타-이-인'처럼 '이' 발음이 이어집니다.",
+        structure: [
+          "退(물러날 퇴): 辶(갈 착) + 艮(머무를 간) → 물러나 나오다 [음독: たい]",
+          "院(집 원): 병원이나 기관 [음독: いん]"
+        ],
+        mnemonic: "입원은 入院(뉴우인), 퇴원은 退院(타이인)! 병원에서 나가는 것이니 '타이인'입니다."
+      },
+      {
+        kanji: "朝刊", kana: "ちょうかん", kr: "쵸우칸",
+        accepts: ["쵸우칸", "쵸-칸", "초우칸", "초-칸", "쵸칸"],
+        meaning: "조간 (아침 신문)", pos: "명사", tags: ["2023"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 朝(ちょう)는 '쵸(ちょ)' + 'う(우)' 장음입니다! '쵸우칸' 또는 '쵸-칸'으로 표기하세요.",
+        structure: [
+          "朝(아침 조): 풀이 돋고 달이 지는 아침 [음독: ちょう / 훈독: あさ]",
+          "刊(새길 간): 좌 干(방패 간) + 우 刂(칼 도) → 책을 찍어냄 [음독: かん]"
+        ],
+        mnemonic: "조간신문은 朝刊(쵸우칸), 석간신문은 夕刊(유우칸)! 둘 다 앞 글자에 장음 '우'가 들어갑니다."
+      },
+      {
+        kanji: "広場", kana: "ひろば", kr: "히로바",
+        accepts: ["히로바"],
+        meaning: "광장", pos: "명사", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 場는 훈독 'ば(바)' 탁음으로 읽습니다.",
+        structure: [
+          "広(넓을 광): 广(집 엄) + ム → 넓게 트인 공간 [훈독: ひろ-い]",
+          "場(마당 장): 흙(土)으로 다진 넓은 터 [훈독: ば]"
+        ],
+        mnemonic: "넓다(広い: 히로이) + 장소(場: 바) = 히로바! 단어 뜻 그대로 조합된 직관적인 단어입니다."
+      },
+      {
+        kanji: "夫婦", kana: "ふうふ", kr: "후우후",
+        accepts: ["후우후", "후-후", "후후"],
+        meaning: "부부", pos: "명사", tags: ["2023"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 앞의 夫(ふう)는 장음, 뒤의 婦(ふ)는 단음입니다! '후우후' 또는 '후-후'로 앞을 길게 뺍니다.",
+        structure: [
+          "夫(남편 부): 성인 남자(大)가 상투를 튼 모습 [음독: ふう]",
+          "婦(며느리/아내 부): 좌 女(여자 여) + 우 帚(빗자루 추) [음독: ふ]"
+        ],
+        mnemonic: "남편이 먼저 길게 '후우~' 부르면 아내가 짧게 '후!' 하고 대답한다고 외우세요. '후우후(ふうふ)'!"
+      },
+      {
+        kanji: "復習", kana: "ふくしゅう", kr: "후쿠슈우",
+        accepts: ["후쿠슈우", "후쿠슈-", "후쿠슈"],
+        meaning: "복습", pos: "명사·する동사", tags: ["2023"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 習(しゅう)는 '슈(しゅ)' + 'う(우)' 장음입니다! '후쿠슈우' 또는 '후쿠슈-'로 표기하세요.",
+        structure: [
+          "復(다시 복): 彳(조금 걸을 척) + 复(돌아올 복) → 다시 반복함 [음독: ふく]",
+          "習(익힐 습): 위 羽(깃 우) + 아래 白(흰 백) → 어린 새가 날갯짓을 반복해 익힘 [음독: しゅう]"
+        ],
+        mnemonic: "예습은 予習(요슈우), 복습은 復習(후쿠슈우), 연습은 練習(렌슈우)! 習(익힐 습)이 들어가면 무조건 장음 '슈우'입니다."
+      },
+      {
+        kanji: "細い", kana: "ほそい", kr: "호소이",
+        accepts: ["호소이"],
+        meaning: "가늘다, 좁다", pos: "い형용사", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 糸(실 사) + 오른쪽 田(밭 전)",
+          "細(가늘 세): 실(糸)처럼 가늘고 얇다는 뜻 [훈독: ほそ-い]"
+        ],
+        mnemonic: "실(糸)처럼 가늘고 날씬한 허리를 보고 '호소이(호리호리하다)'라고 연상하세요! 반대말은 太い(후토이: 굵다)."
+      },
+      {
+        kanji: "汚す", kana: "よごす", kr: "요고스",
+        accepts: ["요고스"],
+        meaning: "더럽히다", pos: "타동사 1그룹", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 가운데 글자 'ご(고)' 탁음에 주의하세요.",
+        structure: [
+          "좌우 구조: 왼쪽 氵(물 수) + 오른쪽 亏(어조사 우)",
+          "汚(더러울 오): 고여서 썩은 더러운 물(氵) [훈독: よご-す]"
+        ],
+        mnemonic: "옷을 더럽히면 '요고스(요것 봐라, 옷 버렸네!)'라고 혼난다고 기억하세요. 자동사 '더러워지다'는 汚れる(요고레루)."
+      },
+      {
+        kanji: "留守", kana: "るす", kr: "루스",
+        accepts: ["루스"],
+        meaning: "부재중, 집 비움", pos: "명사", tags: ["2023"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 단어입니다. 한자 음과 전혀 다른 숙자훈/특수 음독이므로 통째로 암기해야 합니다.",
+        structure: [
+          "留(머무를 류): 밭에 머무름 [음독: る / りゅう]",
+          "守(지킬 수): 집(宀)을 지킴 [음독: す / しゅ]"
+        ],
+        mnemonic: "자동응답기를 일본어로 '루스반덴와(留守番電話: 부재중 전화)'라고 합니다. 집에 아무도 없을 땐 '루스(るす)'!"
+      },
+
+      // ================= 2022 기출 =================
+      {
+        kanji: "横断", kana: "おうだん", kr: "오우단",
+        accepts: ["오우단", "오-단", "오단"],
+        meaning: "횡단", pos: "명사·する동사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 横(おう)는 '오(お)' + 'う(우)' 장음입니다! '오우단' 또는 '오-단'으로 길게 뺍니다.",
+        structure: [
+          "横(가로 횡): 가로로 건넘 [음독: おう / 훈독: よこ]",
+          "断(끊을 단): 가로질러 건너감 [음독: だん]"
+        ],
+        mnemonic: "횡단보도를 일본어로 '오우단호도우(横断歩道)'라고 합니다. '오우~ 단(건넌다)'!"
+      },
+      {
+        kanji: "角", kana: "かど", kr: "카도",
+        accepts: ["카도"],
+        meaning: "모퉁이, 길모퉁이", pos: "명사", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 'ど(도)' 탁음에 주의하세요.",
+        structure: [
+          "상형 문자: 동물의 뿔 모양에서 유래 → 뾰족한 모서리·모퉁이",
+          "角(뿔 각): 길모퉁이를 뜻할 때는 훈독 'かど(카도)', 각도·사각형은 음독 'かく(카쿠)'"
+        ],
+        mnemonic: "카드(카도)의 네 모퉁이가 뾰족하다고 연상하세요! '모퉁이를 돌다'는 角を曲がる(카도오 마가루)."
+      },
+      {
+        kanji: "比べる", kana: "くらべる", kr: "쿠라베루",
+        accepts: ["쿠라베루"],
+        meaning: "비교하다", pos: "타동사 2그룹", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 'べ(베)' 탁음에 주의하세요.",
+        structure: [
+          "좌우 구조: 왼쪽 比(견줄 비) + 오른쪽 比(견줄 비)",
+          "比(견줄 비): 두 사람이 나란히 서서 키나 크기를 비교하는 모습 [훈독: くら-べる]"
+        ],
+        mnemonic: "두 물건을 나란히 놓고 '크라(크기를) 베루(비교하다)'라고 외워보세요!"
+      },
+      {
+        kanji: "計算", kana: "けいさん", kr: "케이산",
+        accepts: ["케이산", "케-산", "계산", "케산"],
+        meaning: "계산", pos: "명사·する동사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 計(けい)는 '케(け)' + 'い(이)' 장음입니다! '케이산' 또는 '케-산'으로 표기하세요.",
+        structure: [
+          "計(셀 계): 좌 言(말씀 언) + 우 十(열 십) → 숫자를 셈 [음독: けい]",
+          "算(셈 산): 위 竹(대나무 죽) + 가운데 目 + 아래 廾 → 산가지로 셈함 [음독: さん]"
+        ],
+        mnemonic: "식당에서 계산할 때 '오케이산(お会計: 오카이케이)'이라고 하죠! 계(計)는 항상 '케이'입니다."
+      },
+      {
+        kanji: "血圧", kana: "けつあつ", kr: "케츠아츠",
+        accepts: ["케츠아츠", "케쓰아쓰"],
+        meaning: "혈압", pos: "명사", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 명사입니다. 血은 'けつ(케츠)', 圧은 'あつ(아츠)'로 읽습니다.",
+        structure: [
+          "血(피 혈): 그릇(皿)에 담긴 피 [음독: けつ]",
+          "圧(누를 압): 언덕(厂) 아래 흙(土)이 누르는 힘 [음독: あつ]"
+        ],
+        mnemonic: "혈액(血液: 케츠에키) + 기압(気圧: 키아츠) = 혈압(血圧: 케츠아츠)!"
+      },
+      {
+        kanji: "件", kana: "けん", kr: "켄",
+        accepts: ["켄"],
+        meaning: "건, 안건, 사건", pos: "명사·조수사", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자(け+ん) 음독 명사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 亻(사람 인) + 오른쪽 牛(소 우)",
+          "件(사건 건): 사람(亻)이 소(牛)를 나누어 처리하는 일·안건 [음독: けん]"
+        ],
+        mnemonic: "한국어 한자음 '건(件)'이 일본어로 가면 '켄(けん)'이 됩니다. 이메일 제목에 '〜の件(〜의 건)'으로 매일 쓰입니다."
+      },
+      {
+        kanji: "現在", kana: "げんざい", kr: "겐자이",
+        accepts: ["겐자이"],
+        meaning: "현재", pos: "명사", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 現은 탁음 'げん(겐)', 在는 탁음 'ざい(자이)'로 둘 다 탁음입니다.",
+        structure: [
+          "現(나타날 현): 좌 王(구슬 옥) + 우 見(볼 견) → 지금 눈앞에 나타남 [음독: げん]",
+          "在(있을 재): 흙(土) 위에 존재함 [음독: ざい]"
+        ],
+        mnemonic: "현(現=겐) + 재(在=자이) = 겐자이! 과거(過去: 카코)와 짝지어 외우세요."
+      },
+      {
+        kanji: "情報", kana: "じょうほう", kr: "죠우호우",
+        accepts: ["죠우호우", "죠-호우", "죠우호-", "죠-호-", "조우호우", "조-호-", "죠호"],
+        meaning: "정보", pos: "명사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 情(じょう: 죠우)와 報(ほう: 호우) 모두 장음입니다! '죠우호우' 또는 '죠-호-'로 길게 뺍니다.",
+        structure: [
+          "情(뜻 정): 사정이나 소식 [음독: じょう]",
+          "報(알릴 보): 좌 幸 + 우 卩 → 소식을 알리다 [음독: ほう]"
+        ],
+        mnemonic: "IT·비즈니스 필수 단어! 정보처리는 情報処理(죠우호우쇼리). 앞뒤 모두 장음 '우'가 들어갑니다."
+      },
+      {
+        kanji: "包む", kana: "つつむ", kr: "츠츠무",
+        accepts: ["츠츠무", "쓰쓰무"],
+        meaning: "싸다, 포장하다", pos: "타동사 1그룹", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 동사입니다. '츠'가 두 번 연속 나옵니다.",
+        structure: [
+          "에워쌀 구조: 바깥 勹(쌀 포) + 안 巳(뱀 사/태아)",
+          "包(쌀 포): 보자기로 물건을 감싸는 모습 [훈독: つつ-む]"
+        ],
+        mnemonic: "선물을 포장지로 '츠츠무(차곡차곡 싸다)'! 종이 봉투나 포장지는 包み(츠츠미)라고 합니다."
+      },
+      {
+        kanji: "複数", kana: "ふくすう", kr: "후쿠스우",
+        accepts: ["후쿠스우", "후쿠스-", "후쿠스"],
+        meaning: "복수 (여러 개)", pos: "명사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 数(すう)는 '스(す)' + 'う(우)' 장음입니다! '후쿠스우' 또는 '후쿠스-'로 표기하세요.",
+        structure: [
+          "複(겹칠 복): 좌 衤(옷 의) + 우 复(돌아올 복) → 겹쳐서 여러 개임 [음독: ふく]",
+          "数(셀 수): 숫자와 수량 [음독: すう]"
+        ],
+        mnemonic: "단수는 単数(탄스우), 복수는 複数(후쿠스우)! 数가 들어가면 장음 '스우'입니다."
+      },
+      {
+        kanji: "丸い", kana: "まるい", kr: "마루이",
+        accepts: ["마루이"],
+        meaning: "둥글다", pos: "い형용사", tags: ["2022"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "상형 문자: 구슬이나 공처럼 둥글게 굴러가는 모양",
+          "丸(둥글 환/알 환): 동그란 모양 [훈독: まる-い / 명사: まる(동그라미 ○)]"
+        ],
+        mnemonic: "일본에서 동그라미(○) 표시를 '마루(丸)'라고 부릅니다! 그래서 둥글다는 '마루이'입니다."
+      },
+      {
+        kanji: "難しい", kana: "むずかしい", kr: "무즈카시이",
+        accepts: ["무즈카시이", "무즈카시-", "무즈카시"],
+        meaning: "어렵다", pos: "い형용사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "어미 'しい(시이)'가 길게 이어지며, 두 번째 글자는 탁음 'ず(즈)'입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 莫(없을 막/진흙 근) + 오른쪽 隹(새 추)",
+          "難(어려울 난): 처리하기 까다롭고 어렵다는 뜻 [훈독: むずか-しい / 음독: なん]"
+        ],
+        mnemonic: "너무 어려워서 머리가 '무지(무즈) 카시이(가렵다)'라고 외우면 절대 안 까먹습니다! 반대말은 易しい(야사시이: 쉽다)."
+      },
+      {
+        kanji: "夕日", kana: "ゆうひ", kr: "유우히",
+        accepts: ["유우히", "유-히", "유히"],
+        meaning: "석양, 저녁 해", pos: "명사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 夕(ゆう)는 '유(ゆ)' + 'う(우)' 장음입니다! '유우히' 또는 '유-히'로 길게 발음합니다.",
+        structure: [
+          "夕(저녁 석): 초승달이 막 떠오르는 저녁 무렵 [훈독: ゆう]",
+          "日(날 일/해 일): 태양 [훈독: ひ]"
+        ],
+        mnemonic: "아침 해(일출)는 朝日(아사히), 저녁 해(석양)는 夕日(유우히)! 저녁 夕자는 훈독으로 항상 장음 '유우'입니다."
+      },
+      {
+        kanji: "有名だ", kana: "ゆうめいだ", kr: "유우메이다",
+        accepts: ["유우메이다", "유-메이다", "유우메-다", "유-메-다", "유우메이", "유-메-"],
+        meaning: "유명하다", pos: "형용동사(な형용사)", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 有(ゆう: 유우)와 名(めい: 메이) 모두 장음입니다! '유우메이다' 또는 '유-메-다'로 표기하세요.",
+        structure: [
+          "有(있을 유): 손에 고기를 쥐고 있음 → 가지고 있다 [음독: ゆう]",
+          "名(이름 명): 저녁(夕) 어두울 때 입(口)으로 부르는 이름 [음독: めい]"
+        ],
+        mnemonic: "이름(名=메이)이 널리 알려져 있다(有=유우) = 유우메이다! 초급 필수 형용동사입니다."
+      },
+      {
+        kanji: "容器", kana: "ようき", kr: "요우키",
+        accepts: ["요우키", "요-키", "요키"],
+        meaning: "용기, 그릇", pos: "명사", tags: ["2022"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 容(よう)는 'よ(요)' + 'う(우)' 장음입니다! '요우키' 또는 '요-키'로 길게 뺍니다.",
+        structure: [
+          "容(얼굴 용/담을 용): 집(宀) 안에 물건을 담음 [음독: よう]",
+          "器(그릇 기): 네 개의 입(口)과 개(犬) → 여러 그릇 [음독: き]"
+        ],
+        mnemonic: "내용물(内容: 나이요우)의 容과 같습니다. '요우(용) + 키(기) = 요우키(그릇)'!"
+      },
+
+      // ================= 2021 기출 =================
+      {
+        kanji: "過去", kana: "かこ", kr: "카코",
+        accepts: ["카코"],
+        meaning: "과거", pos: "명사", tags: ["2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 음독 명사입니다.",
+        structure: [
+          "過(지날 과): 辶(갈 착) + 咼(입 비뚤어질 괘) → 이미 지나감 [음독: か]",
+          "去(갈 거): 사람이 그 자리를 떠나감 [음독: こ]"
+        ],
+        mnemonic: "과거(過去: 카코) - 현재(現在: 겐자이) - 미래(未来: 미라이)! 시제 3단 세트로 묶어서 외우세요."
+      },
+      {
+        kanji: "悲しい", kana: "かなしい", kr: "카나시이",
+        accepts: ["카나시이", "카나시-", "카나시"],
+        meaning: "슬프다", pos: "い형용사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "어미 'しい(시이)' 모음 연속에 주의하세요. '카나시이' 또는 '카나시-'로 표기합니다.",
+        structure: [
+          "상하 구조: 위 非(아닐 비) + 아래 心(마음 심)",
+          "悲(슬플 비): 마음(心)이 찢어져 어긋나(非) 슬프다는 뜻 [훈독: かな-しい]"
+        ],
+        mnemonic: "기쁘다(嬉しい: 우레시이)와 반대되는 감정 형용사 '카나시이(슬프다)'입니다."
+      },
+      {
+        kanji: "恋しい", kana: "こいしい", kr: "코이시이",
+        accepts: ["코이시이", "코이시-", "코이시"],
+        meaning: "그립다, 보고 싶다", pos: "い형용사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "어미 'しい(시이)' 모음 연속에 주의하세요. '코이시이' 또는 '코이시-'로 표기합니다.",
+        structure: [
+          "상하 구조: 위 亦(또 역/얽힐 련) + 아래 心(마음 심)",
+          "恋(그리워할 련): 마음(心)이 누군가에게 얽혀 그리워함 [훈독: こい-しい / 명사: こい(사랑)]"
+        ],
+        mnemonic: "사랑·연애를 뜻하는 '코이(恋)'에서 나온 형용사! 사랑하는 사람이나 고향이 그리울 때 '코이시이'라고 합니다."
+      },
+      {
+        kanji: "自然", kana: "しぜん", kr: "시젠",
+        accepts: ["시젠"],
+        meaning: "자연", pos: "명사·형용동사 어간", tags: ["2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 然은 탁음 'ぜん(젠)'으로 읽습니다.",
+        structure: [
+          "自(스스로 자): 코의 모양에서 유래 → 저절로 [음독: し / じ]",
+          "然(그러할 연): 고기(肉)를 불(灬)에 굽는 모습 → 그러함 [음독: ぜん / ねん]"
+        ],
+        mnemonic: "저절로 그러한 세상 = 自然(시젠)! 부사로 쓰여 '자연스럽게'라고 할 때는 自然に(시젠니)가 됩니다."
+      },
+      {
+        kanji: "増減", kana: "ぞうげん", kr: "조우겐",
+        accepts: ["조우겐", "조-겐", "죠우겐", "죠-겐", "조겐"],
+        meaning: "증감 (늘고 줄어듦)", pos: "명사·する동사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음+탁음 주의] 増(ぞう)는 탁음 '조' + 장음 '우', 減(げん)은 탁음 '겐'입니다! '조우겐' 또는 '조-겐'으로 표기하세요.",
+        structure: [
+          "増(더할 증): 좌 土(흙 토) + 우 曽(일찍 증) → 흙을 쌓아 늘림 [음독: ぞう]",
+          "減(덜 감): 좌 氵(물 수) + 우 咸(다 함) → 물이 줄어듦 [음독: げん]"
+        ],
+        mnemonic: "증가(増加: 조우카) + 감소(減少: 겐쇼우)의 앞 글자만 딴 단어! 앞(조우)도 탁음, 뒤(겐)도 탁음입니다."
+      },
+      {
+        kanji: "駐車", kana: "ちゅうしゃ", kr: "츄우샤",
+        accepts: ["츄우샤", "츄-샤", "추우샤", "추-샤", "츄샤"],
+        meaning: "주차", pos: "명사·する동사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 駐(ちゅう)는 '츄(ちゅ)' + 'う(우)' 장음입니다! '츄우샤' 또는 '츄-샤'로 길게 뺍니다.",
+        structure: [
+          "駐(머무를 주): 좌 馬(말 마) + 우 主(주인 주) → 말을 세워 머무름 [음독: ちゅう]",
+          "車(수레 차): 자동차 [음독: しゃ]"
+        ],
+        mnemonic: "주차장은 駐車場(츄우샤죠우)! 차(車=샤)를 세워두는 것(駐=츄우)입니다."
+      },
+      {
+        kanji: "通知", kana: "つうち", kr: "츠우치",
+        accepts: ["츠우치", "츠-치", "쓰우치", "쓰-치", "츠치"],
+        meaning: "통지, 알림", pos: "명사·する동사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 通(つう)는 '츠(つ)' + 'う(우)' 장음입니다! '츠우치' 또는 '츠-치'로 길게 발음합니다.",
+        structure: [
+          "通(통할 통): 辶(갈 착) + 甬(길 용) → 막힘없이 통함 [음독: つう]",
+          "知(알 지): 좌 矢(화살 시) + 우 口(입 구) → 알게 하다 [음독: ち]"
+        ],
+        mnemonic: "스마트폰 알림(푸시 알림)을 일본어로 '通知(츠우치)'라고 부릅니다! 통학(通学: 츠우가쿠)의 通과 같은 발음입니다."
+      },
+      {
+        kanji: "動作", kana: "どうさ", kr: "도우사",
+        accepts: ["도우사", "도-사", "도사"],
+        meaning: "동작", pos: "명사·する동사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 動(どう)는 '도(ど)' + 'う(우)' 장음입니다! '도우사' 또는 '도-사'로 표기하세요.",
+        structure: [
+          "動(움직일 동): 좌 重(무거울 중) + 우 力(힘 력) → 힘을 주어 움직임 [음독: どう]",
+          "作(지을 작): 좌 亻(사람 인) + 우 乍(잠깐 사) [음독: さ / さく]"
+        ],
+        mnemonic: "운동(運動: 운도우)의 動과 같습니다. 作을 '사쿠'가 아니라 짧게 '사(さ)'로 읽는 것이 핵심 포인트!"
+      },
+      {
+        kanji: "努力", kana: "どりょく", kr: "도료쿠",
+        accepts: ["도료쿠", "도료꾸"],
+        meaning: "노력", pos: "명사·する동사", tags: ["2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 음독 명사입니다. 努는 탁음 'ど(도)'로 읽습니다.",
+        structure: [
+          "努(힘쓸 노): 위 奴(종 노) + 아래 力(힘 력) → 힘을 다해 애씀 [음독: ど]",
+          "力(힘 력): 쟁기나 팔 근육 모양 [음독: りょく]"
+        ],
+        mnemonic: "노력(努力: 도료쿠) + 실력(実力: 지츠료쿠)! 힘 력(力)이 받침 없이 '료쿠'로 읽힙니다."
+      },
+      {
+        kanji: "逃げる", kana: "にげる", kr: "니게루",
+        accepts: ["니게루"],
+        meaning: "도망치다, 달아나다", pos: "자동사 2그룹", tags: ["2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 가운데 글자 'げ(게)' 탁음에 주의하세요.",
+        structure: [
+          "반받침 구조: 辶(쉬엄쉬엄 갈 착) + 兆(조짐 조)",
+          "逃(도망할 도): 위험한 조짐(兆)을 보고 재빨리 달아나다(辶) [훈독: に-げる]"
+        ],
+        mnemonic: "위험할 땐 '니게루(네 게 섰거라 하기 전에 도망치다)'! 타동사 '놓아주다/놓치다'는 逃がす(니가스)입니다."
+      },
+      {
+        kanji: "残り", kana: "のこり", kr: "노코리",
+        accepts: ["노코리"],
+        meaning: "나머지, 잔여", pos: "명사", tags: ["2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 명사입니다.",
+        structure: [
+          "残(남을 잔): 歹 + 戋 → 동사 残る(のこる: 남다)의 명사형",
+          "残り(노코리): 다 쓰고 남은 부분"
+        ],
+        mnemonic: "2024년 기출 残す(노코스: 남기다)의 명사형! '노코리(나머지) 시간'처럼 자주 쓰입니다."
+      },
+      {
+        kanji: "生える", kana: "はえる", kr: "하에루",
+        accepts: ["하에루"],
+        meaning: "(풀·수염·이가) 나다, 자라다", pos: "자동사 2그룹", tags: ["2021"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 동사입니다. '하에(はえ)'를 또박또박 읽습니다.",
+        structure: [
+          "상형 문자: 땅(一) 위로 새싹이 돋아나는 모양",
+          "生(날 생): 풀이나 수염, 치아가 새로 돋아나다 [훈독: は-える]"
+        ],
+        mnemonic: "읽기 방법이 무려 10가지가 넘는 生자의 대표 시험 문제! 풀이나 수염이 쑥쑥 '하에루(자라나다)'로 꼭 외우세요."
+      },
+      {
+        kanji: "秒", kana: "びょう", kr: "뵤우",
+        accepts: ["뵤우", "뵤-", "뵤"],
+        meaning: "초 (시간 단위)", pos: "명사·조수사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 秒(びょう)는 '뵤(びょ)' + 'う(우)' 장음입니다! '뵤우' 또는 '뵤-'로 길게 뺍니다.",
+        structure: [
+          "좌우 구조: 왼쪽 禾(벼 화) + 오른쪽 少(적을 소)",
+          "秒(초 초): 벼의 아주 작은 까끄라기처럼 미세한 시간 단위 [음독: びょう]"
+        ],
+        mnemonic: "1초는 一秒(이치뵤우), 10초는 十秒(쥬우뵤우)! 짧은 순간이지만 발음은 장음 '뵤우~'로 깁니다."
+      },
+      {
+        kanji: "郵送", kana: "ゆうそう", kr: "유우소우",
+        accepts: ["유우소우", "유-소우", "유우소-", "유-소-", "유소"],
+        meaning: "우송, 우편 발송", pos: "명사·する동사", tags: ["2021"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 郵(ゆう: 유우)와 送(そう: 소우) 모두 장음입니다! '유우소우' 또는 '유-소-'로 표기하세요.",
+        structure: [
+          "郵(우편 우): 垂 + 阝 [음독: ゆう]",
+          "送(보낼 송): 辶(갈 착) + 关 → 물건을 보냄 [음독: そう]"
+        ],
+        mnemonic: "2025년 기출 郵便(유우빈)의 郵 + 방송(放送: 호우소우)의 送 = 유우소우! 앞뒤 모두 장음입니다."
+      },
+
+      // ================= 신규 추가 어휘 (44개) =================
+      {
+        kanji: "奇数", kana: "きすう", kr: "키스우",
+        accepts: ["키스우", "키스-", "키스"],
+        meaning: "홀수", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 数(すう)는 '스(す)' + 'う(우)' 장음입니다! '키스우' 또는 '키스-'로 표기하세요.",
+        structure: [
+          "奇(기이할 기/홀수 기): 위 大(큰 대) + 아래 可(옳을 가) → 짝이 맞지 않는 수 [음독: き]",
+          "数(셀 수): 숫자 [음독: すう]"
+        ],
+        mnemonic: "기묘하다(奇妙: 키묘우)의 奇 + 숫자(数字: 스우지)의 数 = 키스우(홀수)! 짝수(偶数: 구우스우)와 세트로 외우세요."
+      },
+      {
+        kanji: "偶数", kana: "ぐうすう", kr: "구우스우",
+        accepts: ["구우스우", "구-스우", "구우스-", "구-스-", "구스"],
+        meaning: "짝수", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 偶(ぐう: 구우)와 数(すう: 스우) 모두 장음입니다! '구우스우' 또는 '구-스-'로 길게 뺍니다.",
+        structure: [
+          "偶(짝 우): 좌 亻(사람 인) + 우 禺(원숭이 우) → 둘이 짝을 이룸 [음독: ぐう]",
+          "数(셀 수): 숫자 [음독: すう]"
+        ],
+        mnemonic: "우연(偶然: 구우젠)의 偶와 발음이 같습니다. 홀수(키스우)는 앞이 단음, 짝수(구우스우)는 둘 다 짝이 맞아서 앞뒤 모두 장음입니다!"
+      },
+      {
+        kanji: "高級", kana: "こうきゅう", kr: "코우큐우",
+        accepts: ["코우큐우", "코-큐우", "코우큐-", "코-큐-", "코큐"],
+        meaning: "고급", pos: "명사·형용동사 어간", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 高(こう: 코우)와 級(きゅう: 큐우) 모두 장음입니다! '코우큐우' 또는 '코-큐-'로 표기하세요.",
+        structure: [
+          "高(높을 고): 수준이 높음 [음독: こう]",
+          "級(등급 급): 좌 糸(실 사) + 우 及(미칠 급) → 등급 [음독: きゅう]"
+        ],
+        mnemonic: "고급 레스토랑(高級レストラン: 코우큐우 레스토란)! 고가(高価: 코우카)와 함께 기억하세요."
+      },
+      {
+        kanji: "基礎", kana: "きそ", kr: "키소",
+        accepts: ["키소"],
+        meaning: "기초", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 음독 명사입니다.",
+        structure: [
+          "基(터 기): 其 + 土 → 주춧돌 터 [음독: き]",
+          "礎(주춧돌 초): 좌 石(돌 석) + 우 楚(초나라 초) → 기둥을 받치는 돌 [음독: そ]"
+        ],
+        mnemonic: "기(基=키) + 초(礎=소) = 키소! '기초부터 다시 시작하다'는 基礎からやり直す."
+      },
+      {
+        kanji: "基盤", kana: "きばん", kr: "키반",
+        accepts: ["키반"],
+        meaning: "기반", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 盤은 탁음 'ばん(반)'으로 읽습니다.",
+        structure: [
+          "基(터 기): 土대지 [음독: き]",
+          "盤(소반 반): 般 + 皿(그릇 명) → 넓고 단단한 받침판 [음독: ばん]"
+        ],
+        mnemonic: "기초(基礎: 키소) - 기반(基盤: 키반) - 기준(基準: 키준)! 앞 글자 基(키) 3형제를 한 번에 정리하세요."
+      },
+      {
+        kanji: "基準", kana: "きじゅん", kr: "키쥰",
+        accepts: ["키쥰", "키준"],
+        meaning: "기준", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 準은 탁음 'じゅん(쥰)'으로 읽습니다.",
+        structure: [
+          "基(터 기): 토대 [음독: き]",
+          "準(준할 준): 氵 + 隼(새매 준) → 수평을 맞추는 표준 [음독: じゅん]"
+        ],
+        mnemonic: "준비(準備: 쥰비)의 準과 같습니다. '기(키) + 준(쥰) = 키쥰(기준)'!"
+      },
+      {
+        kanji: "各駅", kana: "かくえき", kr: "카쿠에키",
+        accepts: ["카쿠에키"],
+        meaning: "각역 (모든 역)", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 명사입니다. '카쿠에키'로 한 글자씩 또박또박 읽습니다.",
+        structure: [
+          "各(각각 각): 위 夂(뒤져올 치) + 아래 口(입 구) → 저마다 각각 [음독: かく]",
+          "駅(역 역): 좌 馬(말 마) + 우 尺(자 척) → 기차역 [음독: えき]"
+        ],
+        mnemonic: "일본 전철 탈 때 무조건 보는 단어! 모든 역에 다 서는 완행열차를 '各駅停車(카쿠에키테이샤)'라고 합니다."
+      },
+      {
+        kanji: "停車", kana: "ていしゃ", kr: "테이샤",
+        accepts: ["테이샤", "테-샤", "테샤"],
+        meaning: "정차 (차가 멈춤)", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 停(てい)는 '테(て)' + 'い(이)' 장음입니다! '테이샤' 또는 '테-샤'로 표기하세요.",
+        structure: [
+          "停(머무를 정): 좌 亻(사람 인) + 우 亭(정자 정) → 멈춰 섬 [음독: てい]",
+          "車(수레 차): 기차·자동차 [음독: しゃ]"
+        ],
+        mnemonic: "바로 위 '각역(各駅: 카쿠에키)'과 짝꿍! '각역정차(各駅停車: 카쿠에키테이샤)'로 세트로 외우면 일본 전철 마스터!"
+      },
+      {
+        kanji: "改札口", kana: "かいさつぐち", kr: "카이사츠구치",
+        accepts: ["카이사츠구치", "카이사쓰구치"],
+        meaning: "개찰구", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "⚡ [연탁 주의] 입구 口(くち)가 단어 뒤에 붙으면서 탁음 'ぐち(구치)'로 변합니다!",
+        structure: [
+          "改(고칠 개): 좌 己 + 우 攵 → 확인하고 고침 [음독: かい]",
+          "札(패 찰): 좌 木 + 우 乚 → 표(승차권) [음독: さつ]",
+          "口(입 구): 출입구 [훈독: くち → ぐち]"
+        ],
+        mnemonic: "표를 검사하는(改札: 카이사츠) 입구(口: 구치)! 비상구(非常口: 히죠우구치), 출구(出口: 데구치)처럼 뒤에 붙는 口는 전부 '구치'입니다."
+      },
+      {
+        kanji: "個人", kana: "こじん", kr: "코진",
+        accepts: ["코진"],
+        meaning: "개인", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 人은 'にん'이 아니라 탁음 'じん(진)'으로 읽습니다.",
+        structure: [
+          "個(낱 개): 좌 亻(사람 인) + 우 固(굳을 고) → 낱낱의 하나 [음독: こ]",
+          "人(사람 인): 사람 [음독: じん]"
+        ],
+        mnemonic: "타인(他人)은 '타닌', 개인(個人)은 '코진'! 개인정보는 個人情報(코진죠우호우)입니다."
+      },
+      {
+        kanji: "分類", kana: "ぶんるい", kr: "분루이",
+        accepts: ["분루이"],
+        meaning: "분류", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없음. 分은 탁음 'ぶん(분)'으로 읽습니다.",
+        structure: [
+          "分(나눌 분): 위 八(여덟 팔) + 아래 刀(칼 도) → 칼로 나누다 [음독: ぶん]",
+          "類(무리 류): 米 + 大 + 頁 → 같은 종류끼리 모음 [음독: るい]"
+        ],
+        mnemonic: "분(分=분) + 류(類=루이) = 분루이! 종류(種類: 슈루이)의 類와 발음이 같습니다."
+      },
+      {
+        kanji: "分別", kana: "ふんべつ", kr: "훈베츠",
+        accepts: ["훈베츠", "분베츠", "훈베쓰", "분베쓰"],
+        meaning: "분별 (사리 판단) / 분리수거(ぶんべつ)", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "⚡ [청탁 구분 핵심] '사리 분별·철이 듦'은 청음 'ふんべつ(훈베츠)', '쓰레기 분리배출'은 탁음 'ぶんべつ(분베츠)' 둘 다 정답 인정됩니다!",
+        structure: [
+          "分(나눌 분): 갈라서 나눔 [음독: ふん / ぶん]",
+          "別(다를 별): 另 + 刂 → 구별함 [음독: べつ]"
+        ],
+        mnemonic: "어른스러운 '분별력'은 훈베츠(ふんべつ), 일본 생활 필수인 '쓰레기 분리수거(分別ゴミ)'는 분베츠(ぶんべつ)로 구별합니다!"
+      },
+      {
+        kanji: "割れる", kana: "われる", kr: "와레루",
+        accepts: ["와레루"],
+        meaning: "깨지다, 갈라지다", pos: "자동사 2그룹", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 자동사입니다.",
+        structure: [
+          "割(나눌 할): 害 + 刂",
+          "れる(레루): 자발·자동사 어미 (타동사는 割る[와루: 깨뜨리다])"
+        ],
+        mnemonic: "유리컵이 저절로 쩍! 하고 '와레루(깨지다)'! 2024년 기출 割る(와루: 깨뜨리다)와 자·타동사 짝꿍입니다."
+      },
+      {
+        kanji: "信号", kana: "しんごう", kr: "신고우",
+        accepts: ["신고우", "신고-", "신고"],
+        meaning: "신호, 신호등", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음+탁음 주의] 号(ごう)는 탁음 'ご(고)' + 장음 'う(우)'입니다! '신고우' 또는 '신고-'로 길게 뺍니다.",
+        structure: [
+          "信(믿을 신): 좌 亻(사람 인) + 우 言(말씀 언) → 소식을 전함 [음독: しん]",
+          "号(부르짖을 호): 부호·신호 [음독: ごう]"
+        ],
+        mnemonic: "일본에서는 신호등을 간단히 '信号(신고우)'라고 부릅니다. 번호(番号: 반고우)의 号와 같습니다."
+      },
+      {
+        kanji: "若い", kana: "わかい", kr: "와카이",
+        accepts: ["와카이"],
+        meaning: "젊다, 어리다", pos: "い형용사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "상하 구조: 위 艹(풀 초) + 아래 右(오른 우)",
+          "若(젊을 약): 갓 돋아난 부드러운 풀(艹)처럼 젊다는 뜻 [훈독: わか-い]"
+        ],
+        mnemonic: "젊은 세대를 일본어로 '와카모노(若者)'라고 합니다! '와카이(젊다)' 꼭 기억하세요."
+      },
+      {
+        kanji: "朝食", kana: "ちょうしょく", kr: "쵸우쇼쿠",
+        accepts: ["쵸우쇼쿠", "쵸-쇼쿠", "초우쇼쿠", "초-쇼쿠", "쵸쇼쿠"],
+        meaning: "조식 (아침 식사)", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 朝(ちょう)는 '쵸(ちょ)' + 'う(우)' 장음, 食(しょく)는 단음입니다! '쵸우쇼쿠' 또는 '쵸-쇼쿠'로 표기하세요.",
+        structure: [
+          "朝(아침 조): 아침 [음독: ちょう / 훈독: あさ]",
+          "食(밥 식): 밥을 먹음 [음독: しょく]"
+        ],
+        mnemonic: "조식(朝食: 쵸우쇼쿠) - 중식(昼食: 츄우쇼쿠) - 석식(夕食: 유우쇼쿠)! 호텔 예약할 때 '朝食付き(조식 포함)'로 자주 봅니다."
+      },
+      {
+        kanji: "測る", kana: "はかる", kr: "하카루",
+        accepts: ["하카루"],
+        meaning: "재다, 측정하다", pos: "타동사 1그룹", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 氵(물 수) + 오른쪽 則(법칙 칙)",
+          "測(잴 측): 물(氵)의 깊이를 자로 재는 것에서 유래 [훈독: はか-る]"
+        ],
+        mnemonic: "길이·깊이·온도 등은 測る(하카루), 무게·부피는 量る(하카루), 시간·분량 등은 計る(하카루)를 주로 씁니다. 발음은 전부 '하카루'입니다."
+      },
+      {
+        kanji: "経営学", kana: "けいえいがく", kr: "케이에이가쿠",
+        accepts: ["케이에이가쿠", "케-에-가쿠", "케이에-가쿠", "케에가쿠"],
+        meaning: "경영학", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 経(けい: 케이)와 営(えい: 에이) 모두 '이' 장음입니다! '케이에이가쿠' 또는 '케-에-가쿠'로 표기하세요.",
+        structure: [
+          "経(지날 경): 좌 糸 + 우 圣 → 다스리다 [음독: けい]",
+          "営(경영할 영): 불빛 아래 집을 짓고 운영함 [음독: えい]",
+          "学(배울 학): 학문 [음독: がく]"
+        ],
+        mnemonic: "경제학은 経済学(케이자이가쿠), 경영학은 経営学(케이에이가쿠)! 둘 다 '케이-'로 시작합니다."
+      },
+      {
+        kanji: "勝つ", kana: "かつ", kr: "카츠",
+        accepts: ["카츠", "카쓰"],
+        meaning: "이기다", pos: "자동사 1그룹", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 月(육달 월) + 오른쪽 券(문서 권/힘)",
+          "勝(이길 승): 힘을 다해 승리하다 [훈독: か-つ / 음독: しょう]"
+        ],
+        mnemonic: "돈가스(돈카츠)를 일본 수험생들이 시험 전에 먹는 이유가 '카츠(勝つ: 이기다)'와 발음이 같기 때문입니다! 반대말은 負ける(마케루: 지다)."
+      },
+      {
+        kanji: "苦労", kana: "くろう", kr: "쿠로우",
+        accepts: ["쿠로우", "쿠로-", "쿠로"],
+        meaning: "고생, 수고", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 労(ろう)는 '로(ろ)' + 'う(우)' 장음입니다! '쿠로우' 또는 '쿠로-'로 길게 뺍니다.",
+        structure: [
+          "苦(괴로울 고): 괴로움 [음독: く / 훈독: くる-しい]",
+          "労(일할 로): 힘을 들여 일함 [음독: ろう]"
+        ],
+        mnemonic: "고생(苦労: 쿠로우) 끝에 낙이 온다! 일본 드라마에서 '쿠로우 시타네(고생 많았네)'라는 대사가 정말 자주 나옵니다."
+      },
+      {
+        kanji: "独立", kana: "どくりつ", kr: "도쿠리츠",
+        accepts: ["도쿠리츠", "도쿠리쓰"],
+        meaning: "독립", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 명사입니다. 独은 탁음 'どく(도쿠)'로 읽습니다.",
+        structure: [
+          "独(홀로 독): 좌 犭(개 견) + 우 虫(벌레 충) → 홀로 섬 [음독: どく]",
+          "立(설 립): 두 발로 똑바로 섬 [음독: りつ]"
+        ],
+        mnemonic: "독서(読書: 도쿠쇼)의 独 + 국립(国立: 코쿠리츠)의 立 = 도쿠리츠(독립)!"
+      },
+      {
+        kanji: "方向", kana: "ほうこう", kr: "호우코우",
+        accepts: ["호우코우", "호-코우", "호우코-", "호-코-", "호코"],
+        meaning: "방향", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 方(ほう: 호우)와 向(こう: 코우) 모두 장음입니다! '호우코우' 또는 '호-코-'로 길게 발음합니다.",
+        structure: [
+          "方(모 방/방향 방): 사방·방향 [음독: ほう]",
+          "向(향할 향): 창문이 난 방향을 바라봄 [음독: こう]"
+        ],
+        mnemonic: "방법(方法: 호우호우)의 方 + 향상(向上: 코우죠우)의 向 = 호우코우! 앞뒤 모두 장음 '우'가 들어갑니다."
+      },
+      {
+        kanji: "交流", kana: "こうりゅう", kr: "코우류우",
+        accepts: ["코우류우", "코-류우", "코우류-", "코-류-", "코류"],
+        meaning: "교류", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 交(こう: 코우)와 流(りゅう: 류우) 모두 장음입니다! '코우류우' 또는 '코-류-'로 표기하세요.",
+        structure: [
+          "交(사귈 교): 다리를 꼬고 마주 앉아 사귐 [음독: こう]",
+          "流(흐를 류): 좌 氵(물 수) + 우 㐬 → 물이 흘러 섞임 [음독: りゅう]"
+        ],
+        mnemonic: "교통(交通: 코우츠우)의 交 + 유행(流行: 류우코우)의 流 = 코우류우! 앞뒤 모두 장음입니다."
+      },
+      {
+        kanji: "実力", kana: "じつりょく", kr: "지츠료쿠",
+        accepts: ["지츠료쿠", "지쓰료꾸", "지츠료꾸"],
+        meaning: "실력", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 명사입니다. 実은 탁음 'じつ(지츠)'로 읽습니다.",
+        structure: [
+          "実(열매 실/실제 실): 집(宀) 안에 열매가 가득 참 [음독: じつ]",
+          "力(힘 력): 힘·능력 [음독: りょく]"
+        ],
+        mnemonic: "2021년 기출 努力(도료쿠)의 친구! 실제(実際: 지싸이)의 実 + 힘(力: 료쿠) = 지츠료쿠(실력)."
+      },
+      {
+        kanji: "卒業", kana: "そつぎょう", kr: "소츠교우",
+        accepts: ["소츠교우", "소츠교-", "소쓰교우", "소쓰교-", "소츠교"],
+        meaning: "졸업", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 業(ぎょう)는 '교(ぎょ)' + 'う(우)' 장음입니다! '소츠교우' 또는 '소츠교-'로 길게 뺍니다.",
+        structure: [
+          "卒(마칠 졸): 옷깃을 여미고 과정을 마침 [음독: そつ]",
+          "業(일 업/학업 업): 학업 [음독: ぎょう]"
+        ],
+        mnemonic: "입학(入学: 뉴우가쿠)과 졸업(卒業: 소츠교우)! 2023년 기출 産業(산교우)처럼 業은 항상 장음 '교우'입니다."
+      },
+      {
+        kanji: "位置", kana: "いち", kr: "이치",
+        accepts: ["이치"],
+        meaning: "위치", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 음독 명사입니다.",
+        structure: [
+          "位(자리 위): 좌 亻(사람 인) + 우 立(설 립) → 사람이 서 있는 자리 [음독: い]",
+          "置(둘 치): 위 罒(그물 망) + 아래 直(곧을 직) → 놓아두다 [음독: ち]"
+        ],
+        mnemonic: "숫자 1(一: 이치)과 발음이 완전히 똑같습니다! '이치(위치)'로 1초 만에 외울 수 있습니다."
+      },
+      {
+        kanji: "折れる", kana: "おれる", kr: "오레루",
+        accepts: ["오레루"],
+        meaning: "부러지다, 꺾이다", pos: "자동사 2그룹", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 자동사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 扌(손 수) + 오른쪽 斤(도끼 근)",
+          "折(꺾을 절): 나무나 뼈가 꺾이고 부러지다 [훈독: お-れる]"
+        ],
+        mnemonic: "나뭇가지가 뚝! 하고 '오레루(부러지다)'! 타동사 '부러뜨리다/접다'는 折る(오루), 종이접기는 折り紙(오리가미)입니다."
+      },
+      {
+        kanji: "首都", kana: "しゅと", kr: "슈토",
+        accepts: ["슈토"],
+        meaning: "수도 (한 나라의 중심 도시)", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 음독 명사입니다. '슈우토(시부모)'와 구별하기 위해 짧게 읽습니다.",
+        structure: [
+          "首(머리 수): 우두머리·중심 [음독: しゅ / 훈독: くび(목)]",
+          "都(도읍 도): 者 + 阝 → 큰 도시 [음독: と / つ]"
+        ],
+        mnemonic: "도쿄(東京: 토우쿄우)의 都가 바로 이 글자! 머리(首=슈)가 되는 도시(都=토) = 슈토(수도)."
+      },
+      {
+        kanji: "人口", kana: "じんこう", kr: "진코우",
+        accepts: ["진코우", "진코-", "진코"],
+        meaning: "인구", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 口(こう)는 '코(こ)' + 'う(우)' 장음입니다! '진코우' 또는 '진코-'로 길게 발음합니다.",
+        structure: [
+          "人(사람 인): 사람 [음독: じん]",
+          "口(입 구): 밥 먹는 입의 수 → 사람 수 [음독: こう]"
+        ],
+        mnemonic: "인공(人工)도 じんこう(진코우)로 발음이 같습니다. 口가 음독으로 읽히면 '코우' 장음이 됩니다!"
+      },
+      {
+        kanji: "調査", kana: "ちょうさ", kr: "쵸우사",
+        accepts: ["쵸우사", "쵸-사", "초우사", "초-사", "쵸사"],
+        meaning: "조사", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 주의] 調(ちょう)는 '쵸(ちょ)' + 'う(우)' 장음입니다! '쵸우사' 또는 '쵸-사'로 표기하세요.",
+        structure: [
+          "調(고를 조/조사할 조): 좌 言 + 우 周 → 두루 살펴봄 [음독: ちょう]",
+          "査(조사할 사): 木 + 且 → 꼼꼼히 따져 봄 [음독: さ]"
+        ],
+        mnemonic: "조사하다(調べる: 시라베루)의 調! 음독으로 읽으면 調査(쵸우사)가 됩니다."
+      },
+      {
+        kanji: "得意だ", kana: "とくいだ", kr: "토쿠이다",
+        accepts: ["토쿠이다", "토쿠이"],
+        meaning: "잘하다, 자신 있다, 특기다", pos: "형용동사(な형용사)", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 형용동사입니다.",
+        structure: [
+          "得(얻을 득): 彳 + 㝵 → 손에 넣음 [음독: とく]",
+          "意(뜻 의): 音 + 心 → 마음속 뜻 [음독: い]"
+        ],
+        mnemonic: "한국어 한자음 '득의(得意)'가 일본어에서는 '잘하다, 자신 있다'는 뜻으로 쓰입니다! 반대말은 苦手だ(니가테다: 서툴다)."
+      },
+      {
+        kanji: "命令", kana: "めいれい", kr: "메이레이",
+        accepts: ["메이레이", "메-레이", "메이레-", "메-레-", "메레"],
+        meaning: "명령", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [장음 2연속 주의] 命(めい: 메이)와 令(れい: 레이) 모두 '이' 장음입니다! '메이레이' 또는 '메-레-'로 표기하세요.",
+        structure: [
+          "命(목숨 명/명령할 명): 입으로 내리는 명령 [음독: めい]",
+          "令(하여금 령): 무릎 꿇고 명령을 듣는 모습 [음독: れい]"
+        ],
+        mnemonic: "명(命=메이) + 령(令=레이) = 메이레이! 앞뒤 모두 장음 '이'가 들어가는 깔끔한 라임 단어입니다."
+      },
+      {
+        kanji: "厚い", kana: "あつい", kr: "아츠이",
+        accepts: ["아츠이", "아쓰이"],
+        meaning: "두껍다", pos: "い형용사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "상하 조합: 언덕(厂) 아래 日 + 子 → 두텁게 쌓인 모습",
+          "厚(두터울 후): 책이나 옷감이 두껍다 [훈독: あつ-い]"
+        ],
+        mnemonic: "발음이 같은 3형제 구별 필수! 厚い(두껍다) / 暑い(날씨가 덥다) / 熱い(물·음식이 뜨겁다). 모두 '아츠이'입니다."
+      },
+      {
+        kanji: "浅い", kana: "あさい", kr: "아사이",
+        accepts: ["아사이"],
+        meaning: "얕다", pos: "い형용사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 氵(물 수) + 오른쪽 戋(적을 잔)",
+          "浅(얕을 천): 물(氵)이 적어서 깊이가 얕다 [훈독: あさ-い]"
+        ],
+        mnemonic: "2024년 기출 深い(후카이: 깊다)의 반대말! 물이 얕으면 발만 담글 수 있으니 '아싸~이(아사이)'라고 외우세요."
+      },
+      {
+        kanji: "薄い", kana: "うすい", kr: "우스이",
+        accepts: ["우스이"],
+        meaning: "얇다, 연하다(싱겁다)", pos: "い형용사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "상하 구조: 위 艹(풀 초) + 아래 溥(넓을 부)",
+          "薄(얇을 박): 종이가 얇거나 커피·국물 맛이 연하다 [훈독: うす-い]"
+        ],
+        mnemonic: "두껍다(厚い: 아츠이)의 반대말이 薄い(우스이: 얇다)! 커피나 간이 싱거울 때도 '우스이'를 씁니다."
+      },
+      {
+        kanji: "瓶", kana: "びん", kr: "빈",
+        accepts: ["빈"],
+        meaning: "병 (유리병)", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자(び+ん) 단어입니다. 탁음 'び(비)'에 주의하세요.",
+        structure: [
+          "좌우 구조: 왼쪽 并(아우를 병) + 오른쪽 瓦(기와 와/질그릇)",
+          "瓶(병 병): 도자기나 유리로 만든 병 [음독: びん]"
+        ],
+        mnemonic: "한국어 '병'이 일본어로 '빈(びん)'! 병맥주는 瓶ビール(빈비-루)라고 합니다."
+      },
+      {
+        kanji: "蓋", kana: "ふた", kr: "후타",
+        accepts: ["후타"],
+        meaning: "뚜껑", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 명사입니다.",
+        structure: [
+          "상하 구조: 위 艹(풀 초) + 가운데 去(갈 거) + 아래 皿(그릇 명)",
+          "蓋(덮을 개): 그릇(皿) 위를 덮는 뚜껑 [훈독: ふた]"
+        ],
+        mnemonic: "냄비 뚜껑을 열 때 뜨거운 김이 '후~ 타!(후타)' 하고 올라온다고 기억하세요!"
+      },
+      {
+        kanji: "硬い", kana: "かたい", kr: "카타이",
+        accepts: ["카타이"],
+        meaning: "단단하다, 딱딱하다", pos: "い형용사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "좌우 구조: 왼쪽 石(돌 석) + 오른쪽 更(고칠 경)",
+          "硬(굳을 경): 돌(石)처럼 단단하고 딱딱하다 [훈독: かた-い]"
+        ],
+        mnemonic: "돌 석(石) 변이 붙으면 돌처럼 딱딱한 硬い(카타이)! 固い(견고하다), 堅い(견실하다)도 발음은 모두 '카타이'입니다."
+      },
+      {
+        kanji: "遅い", kana: "おそい", kr: "오소이",
+        accepts: ["오소이"],
+        meaning: "늦다, 느리다", pos: "い형용사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 3박자 훈독 형용사입니다.",
+        structure: [
+          "반받침 구조: 辶(쉬엄쉬엄 갈 착) + 犀(무소 서)",
+          "遅(늦을 지): 걸음이 느려 시간이 늦어지다 [훈독: おそ-い]"
+        ],
+        mnemonic: "지각해서 늦으면 '오소이(어이쿠, 늦었네)!' 반대말은 早い(하야이: 이르다) / 速い(하야이: 빠르다)입니다."
+      },
+      {
+        kanji: "受付", kana: "うけつけ", kr: "우케츠케",
+        accepts: ["우케츠케", "우케쓰케"],
+        meaning: "접수, 신청 (안내 데스크)", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 훈독 복합명사입니다. 오쿠리가나(送り仮名)가 생략된 표기입니다.",
+        structure: [
+          "受(받을 수): 서류를 받다 [훈독: う-ける]",
+          "付(붙일 부): 접수하다 [훈독: つ-ける]"
+        ],
+        mnemonic: "동사 受け付ける(우케츠케루: 접수하다)에서 온 명사! 병원이나 행사장 입구의 '접수처' 간판에 100% 受付(우케츠케)라고 적혀 있습니다."
+      },
+      {
+        kanji: "干す", kana: "ほす", kr: "호스",
+        accepts: ["호스"],
+        meaning: "말리다, 널다", pos: "타동사 1그룹", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 2박자 훈독 동사입니다.",
+        structure: [
+          "상형 문자: 빨래나 곡식을 매달아 말리는 장대 모양",
+          "干(방패 간/마를 간): 햇볕에 빨래를 널어 말리다 [훈독: ほ-す]"
+        ],
+        mnemonic: "빨래를 말릴 때 '호스(물 뿌리는 호스가 아니라 말리는 호스!)'로 외우세요. 곶감(말린 감)을 干し柿(호시가키)라고 합니다."
+      },
+      {
+        kanji: "今日", kana: "きょう / こんにち", kr: "쿄우",
+        ttsKana: "きょう",
+        accepts: ["쿄우", "쿄-", "쿄", "콘니치"],
+        meaning: "오늘 / 금일", pos: "명사", tags: ["NEW"], hasPhonetic: true,
+        phoneticNote: "⚡ [음독/훈독 양쪽 정답] 일상적인 '오늘'은 훈독 'きょう(쿄우)', 격식 있는 '금일'이나 인사(こんにちは) 맥락에서는 음독 'こんにち(콘니치)'로 읽으며 둘 다 정답 처리됩니다!",
+        structure: [
+          "今(이제 금): 지금 [음독: こん]",
+          "日(날 일): 날 [음독: にち] / 숙자훈 전체 읽기: きょう(쿄우)"
+        ],
+        mnemonic: "일상 회화에서 '오늘'은 쿄우(きょう), 비즈니스 문서에서 '금일'이나 인사말 '곤니치와(今日は)'의 한자 읽기는 콘니치(こんにち)입니다."
+      },
+      {
+        kanji: "外科", kana: "げか", kr: "게카",
+        accepts: ["게카"],
+        meaning: "외과", pos: "명사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "⚡ [탁음 주의] 外를 'がい(가이)'가 아니라 탁음 'げ(게)'로 읽습니다! '게카'가 정답입니다.",
+        structure: [
+          "外(바깥 외): 夕 + 卜 [음독: げ / がい]",
+          "科(과목 과): 禾 + 斗 → 진료 과목 [음독: か]"
+        ],
+        mnemonic: "내과는 内科(나이카), 외과는 外科(게카)! '가이카'가 아니라 '게카'로 읽는 특이 음독이므로 시험 단골입니다."
+      },
+      {
+        kanji: "禁煙", kana: "きんえん", kr: "킨엔",
+        accepts: ["킨엔"],
+        meaning: "금연", pos: "명사·する동사", tags: ["NEW"], hasPhonetic: false,
+        phoneticNote: "장음·촉음 없는 4박자 음독 명사입니다. '킨(きん)' + '엔(えん)'을 정확히 끊어 읽습니다.",
+        structure: [
+          "禁(금할 금): 위 林(수풀 림) + 아래 示(보일 시) → 출입·행동을 금지함 [음독: きん]",
+          "煙(연기 연): 좌 火(불 화) + 우 垔(막을 인) → 담배 연기 [음독: えん]"
+        ],
+        mnemonic: "금지(禁止: 킨시)의 禁 + 연기(煙: 엔) = 킨엔(금연)! 흡연은 喫煙(키츠엔)입니다."
+      }
+    ];
+
+    const STORAGE_KEYS = {
+      bookmarks: "jp_kanji_bookmarks_v2",
+      customWords: "jp_kanji_custom_words_v2",
+      mastery: "jp_kanji_mastery_v2"
+    };
+
+    function safeGet(key, fallback) {
+      try {
+        const raw = window.localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    function safeSet(key, value) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        // 스토리지 제한 환경 무시
+      }
+    }
+
+    let customWords = safeGet(STORAGE_KEYS.customWords, []);
+    let bookmarks = new Set(safeGet(STORAGE_KEYS.bookmarks, []));
+    // mastery: { [kanji]: { correct: number, wrong: number } }
+    let masteryMap = safeGet(STORAGE_KEYS.mastery, {});
+
+    function getAllVocab() {
+      return [...BASE_VOCAB_DATA, ...customWords];
+    }
+
+    let currentList = getAllVocab();
+    let currentIndex = 0;
+    let isRandom = true;
+    let isAnswered = false;
+    let streak = 0;
+    let stats = { total: 0, correct: 0 };
+
+    // DOM 참조
+    const categorySelect = document.getElementById("categorySelect");
+    const orderToggle = document.getElementById("orderToggle");
+    const streakBadge = document.getElementById("streakBadge");
+    const statProgress = document.getElementById("statProgress");
+    const statAccuracy = document.getElementById("statAccuracy");
+    const vocabCountSummary = document.getElementById("vocabCountSummary");
+    const progressBar = document.getElementById("progressBar");
+
+    const cardCategory = document.getElementById("cardCategory");
+    const cardMastery = document.getElementById("cardMastery");
+    const cardPhoneticBadge = document.getElementById("cardPhoneticBadge");
+    const kanjiText = document.getElementById("kanjiText");
+    const posHint = document.getElementById("posHint");
+    const quizForm = document.getElementById("quizForm");
+    const answerInput = document.getElementById("answerInput");
+    const submitBtn = document.getElementById("submitBtn");
+
+    const feedbackArea = document.getElementById("feedbackArea");
+    const resultBanner = document.getElementById("resultBanner");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultReading = document.getElementById("resultReading");
+    const ttsBtn = document.getElementById("ttsBtn");
+    const ttsStatus = document.getElementById("ttsStatus");
+    const fbMeaning = document.getElementById("fbMeaning");
+    const fbPhonetic = document.getElementById("fbPhonetic");
+    const fbStructure = document.getElementById("fbStructure");
+    const fbMnemonic = document.getElementById("fbMnemonic");
+    const bookmarkBtn = document.getElementById("bookmarkBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    const openAddModalBtn = document.getElementById("openAddModalBtn");
+    const openManageModalBtn = document.getElementById("openManageModalBtn");
+    const addModalBackdrop = document.getElementById("addModalBackdrop");
+    const addModalTitle = document.getElementById("addModalTitle");
+    const addModalDesc = document.getElementById("addModalDesc");
+    const saveWordSubmitBtn = document.getElementById("saveWordSubmitBtn");
+    const cancelAddModalBtn = document.getElementById("cancelAddModalBtn");
+    const addWordForm = document.getElementById("addWordForm");
+
+    const manageModalBackdrop = document.getElementById("manageModalBackdrop");
+    const customManageList = document.getElementById("customManageList");
+    const addFromManageBtn = document.getElementById("addFromManageBtn");
+    const closeManageModalBtn = document.getElementById("closeManageModalBtn");
+
+    const cardEditCustomBtn = document.getElementById("cardEditCustomBtn");
+    const cardDeleteCustomBtn = document.getElementById("cardDeleteCustomBtn");
+
+    const exportJsonBtn = document.getElementById("exportJsonBtn");
+    const importJsonBtn = document.getElementById("importJsonBtn");
+    const importFileInput = document.getElementById("importFileInput");
+
+    let editingCustomIndex = -1;
+
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function normalize(str) {
+      return String(str || "")
+        .trim()
+        .replace(/\s+/g, "")
+        .replace(/[ー―—ㅡ]/g, "-");
+    }
+
+    function expandVariants(word) {
+      const base = normalize(word);
+      const variants = new Set([base]);
+      variants.add(base.replace(/우/g, "-"));
+      variants.add(base.replace(/-/g, "우"));
+      if (base.endsWith("이")) variants.add(base.slice(0, -1) + "-");
+      if (base.endsWith("-")) variants.add(base.slice(0, -1) + "이");
+      return variants;
+    }
+
+    function checkAnswer(userRaw, item) {
+      const userNorm = normalize(userRaw);
+      if (!userNorm) return false;
+
+      const validPool = new Set();
+      [item.kr, ...(item.accepts || [])].forEach(acc => {
+        expandVariants(acc).forEach(v => validPool.add(v));
+      });
+      return validPool.has(userNorm);
+    }
+
+    function isUnmastered(item) {
+      const m = masteryMap[item.kanji];
+      if (!m) return true;
+      if ((m.wrong || 0) > (m.correct || 0)) return true;
+      return (m.correct || 0) < 2;
+    }
+
+    function updateMasteryBadge(kanji) {
+      const m = masteryMap[kanji] || { correct: 0, wrong: 0 };
+      const c = m.correct || 0;
+      const w = m.wrong || 0;
+      cardMastery.className = "badge";
+
+      if (c === 0 && w === 0) {
+        cardMastery.classList.add("mastery-low");
+        cardMastery.textContent = "숙달: 미학습";
+      } else if (c >= 2 && w === 0) {
+        cardMastery.classList.add("mastery-high");
+        cardMastery.textContent = `숙달: 완료 (정답 ${c}회)`;
+      } else {
+        cardMastery.classList.add("mastery-mid");
+        cardMastery.textContent = `숙달: 복습필요 (정답 ${c} / 오답 ${w})`;
+      }
+    }
+
+    function updateVocabSummary() {
+      const totalAll = getAllVocab().length;
+      vocabCountSummary.textContent = `전체 ${totalAll}단어 (기본 ${BASE_VOCAB_DATA.length} + 내 추가 ${customWords.length})`;
+    }
+
+    function applyFilter() {
+      updateVocabSummary();
+      const all = getAllVocab();
+      const val = categorySelect.value;
+      let filtered = [];
+
+      if (val === "ALL") {
+        filtered = [...all];
+      } else if (val === "UNMASTERED") {
+        filtered = all.filter(isUnmastered);
+        if (filtered.length === 0) {
+          alert("현재 모든 단어를 2회 이상 정답 처리해 미숙달 단어가 없습니다! 전체 단어로 전환합니다.");
+          categorySelect.value = "ALL";
+          filtered = [...all];
+        }
+      } else if (val === "PHONETIC") {
+        filtered = all.filter(d => d.hasPhonetic);
+      } else if (val === "WRONG") {
+        filtered = all.filter(d => bookmarks.has(d.kanji));
+        if (filtered.length === 0) {
+          alert("복습장에 저장된 단어가 없습니다. 전체 단어로 전환합니다.");
+          categorySelect.value = "ALL";
+          filtered = [...all];
+        }
+      } else {
+        filtered = all.filter(d => (d.tags || []).includes(val));
+        if (filtered.length === 0) {
+          alert("해당 분류에 단어가 없습니다. 전체 단어로 전환합니다.");
+          categorySelect.value = "ALL";
+          filtered = [...all];
+        }
+      }
+
+      currentList = isRandom ? shuffle(filtered) : filtered;
+      currentIndex = 0;
+      renderCard();
+    }
+
+    function renderCard() {
+      isAnswered = false;
+      const item = currentList[currentIndex];
+
+      const tagLabels = (item.tags || []).map(t => {
+        if (t === "NEW") return "신규 추가";
+        if (t === "CUSTOM") return "내 추가 단어";
+        return `${t} 기출`;
+      }).join(" · ");
+
+      cardCategory.textContent = tagLabels || "학습 단어";
+      updateMasteryBadge(item.kanji);
+      cardPhoneticBadge.style.display = item.hasPhonetic ? "inline-block" : "none";
+
+      kanjiText.textContent = item.kanji;
+      posHint.textContent = `품사: ${item.pos} | 한글 발음을 입력하고 Enter를 누르세요`;
+
+      answerInput.value = "";
+      answerInput.readOnly = false;
+      submitBtn.textContent = "확인 (Enter)";
+      ttsStatus.textContent = "";
+      feedbackArea.classList.remove("show");
+      feedbackArea.style.display = "none";
+
+      const isCustomItem = (item.tags || []).includes("CUSTOM") && customWords.some(w => w.kanji === item.kanji);
+      cardEditCustomBtn.style.display = isCustomItem ? "inline-block" : "none";
+      cardDeleteCustomBtn.style.display = isCustomItem ? "inline-block" : "none";
+
+      updateBookmarkButton(item.kanji);
+      updateStatsUI();
+      setTimeout(() => answerInput.focus(), 10);
+    }
+
+    function updateBookmarkButton(kanji) {
+      if (bookmarks.has(kanji)) {
+        bookmarkBtn.classList.add("saved");
+        bookmarkBtn.textContent = "★ 복습장 저장됨";
+      } else {
+        bookmarkBtn.classList.remove("saved");
+        bookmarkBtn.textContent = "⭐ 복습장 저장";
+      }
+    }
+
+    function updateStatsUI() {
+      streakBadge.textContent = `🔥 스트릭: ${streak}`;
+      statProgress.textContent = `${currentIndex + 1}/${currentList.length}`;
+      const acc = stats.total === 0 ? 0 : Math.round((stats.correct / stats.total) * 100);
+      statAccuracy.textContent = `${acc}% (${stats.correct}/${stats.total})`;
+      const pct = ((currentIndex + 1) / currentList.length) * 100;
+      progressBar.style.width = `${pct}%`;
+    }
+
+    // 일본어 TTS 발음 재생
+    function speakJapanese(text) {
+      if (!("speechSynthesis" in window)) {
+        ttsStatus.textContent = "이 브라우저는 음성 합성을 지원하지 않습니다.";
+        return;
+      }
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "ja-JP";
+        utter.rate = 0.92;
+        const voices = window.speechSynthesis.getVoices();
+        const jaVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("ja"));
+        if (jaVoice) utter.voice = jaVoice;
+        ttsStatus.textContent = `재생 중: ${text} (ja-JP)`;
+        utter.onend = () => {
+          ttsStatus.textContent = `발음 재생 완료 (${text})`;
+        };
+        utter.onerror = () => {
+          ttsStatus.textContent = "일본어 음성 엔진을 찾지 못했습니다. 기기 TTS 설정을 확인해 주세요.";
+        };
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        ttsStatus.textContent = "음성 재생 중 오류가 발생했습니다.";
+      }
+    }
+
+    function handleSubmit() {
+      if (isAnswered) {
+        goNext();
+        return;
+      }
+
+      const userVal = answerInput.value.trim();
+      if (!userVal) {
+        answerInput.focus();
+        return;
+      }
+
+      const item = currentList[currentIndex];
+      const isCorrect = checkAnswer(userVal, item);
+
+      isAnswered = true;
+      answerInput.readOnly = true;
+      submitBtn.textContent = "다음 문제 ➔";
+      stats.total += 1;
+
+      const prevMastery = masteryMap[item.kanji] || { correct: 0, wrong: 0 };
+
+      if (isCorrect) {
+        stats.correct += 1;
+        streak += 1;
+        masteryMap[item.kanji] = {
+          correct: (prevMastery.correct || 0) + 1,
+          wrong: prevMastery.wrong || 0
+        };
+        resultBanner.className = "result-banner correct";
+        resultTitle.textContent = `⭕ 정답입니다! (입력: ${userVal})`;
+      } else {
+        streak = 0;
+        masteryMap[item.kanji] = {
+          correct: prevMastery.correct || 0,
+          wrong: (prevMastery.wrong || 0) + 1
+        };
+        resultBanner.className = "result-banner wrong";
+        resultTitle.textContent = `❌ 아쉽습니다! (입력: ${userVal})`;
+        bookmarks.add(item.kanji);
+        safeSet(STORAGE_KEYS.bookmarks, Array.from(bookmarks));
+        updateBookmarkButton(item.kanji);
+      }
+
+      safeSet(STORAGE_KEYS.mastery, masteryMap);
+      updateMasteryBadge(item.kanji);
+
+      resultReading.textContent = `히라가나: ${item.kana} ｜ 표준 발음: ${item.kr}`;
+      fbMeaning.innerHTML = `<strong>${item.meaning}</strong> <span style="color:#64748b;">(${item.pos})</span>`;
+      fbPhonetic.textContent = item.phoneticNote;
+
+      fbStructure.innerHTML = "";
+      (item.structure || []).forEach(line => {
+        const li = document.createElement("li");
+        li.textContent = line;
+        fbStructure.appendChild(li);
+      });
+
+      fbMnemonic.textContent = item.mnemonic;
+      feedbackArea.style.display = "block";
+      feedbackArea.classList.add("show");
+      updateStatsUI();
+
+      setTimeout(() => nextBtn.focus(), 30);
+    }
+
+    function goNext() {
+      if ("speechSynthesis" in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      currentIndex += 1;
+      if (currentIndex >= currentList.length) {
+        const restart = confirm(`모든 문제(${currentList.length}개)를 완료했습니다! 정답률: ${statAccuracy.textContent}\n처음부터 다시 학습할까요?`);
+        currentIndex = 0;
+        if (restart && isRandom) {
+          currentList = shuffle(currentList);
+        }
+      }
+      renderCard();
+    }
+
+    // 단어 추가 / 편집 모달 제어
+    function openWordEditorModal(editIdx = -1) {
+      editingCustomIndex = editIdx;
+      addWordForm.reset();
+
+      if (editIdx >= 0 && customWords[editIdx]) {
+        const target = customWords[editIdx];
+        addModalTitle.textContent = "✏️ 내 추가 단어 수정";
+        addModalDesc.textContent = "단어 표기, 발음, 뜻 및 해설을 수정하고 저장합니다.";
+        saveWordSubmitBtn.textContent = "수정 완료";
+
+        document.getElementById("newKanji").value = target.kanji || "";
+        document.getElementById("newKana").value = target.kana || "";
+        document.getElementById("newKr").value = target.kr || "";
+        document.getElementById("newPos").value = target.pos || "명사";
+        const extraAccepts = (target.accepts || []).filter(a => a !== target.kr);
+        document.getElementById("newAccepts").value = extraAccepts.join(", ");
+        document.getElementById("newMeaning").value = target.meaning || "";
+        document.getElementById("newPhonetic").value = target.phoneticNote || "";
+        document.getElementById("newStructure").value = (target.structure || []).join("\n");
+        document.getElementById("newMnemonic").value = target.mnemonic || "";
+        document.getElementById("newHasPhonetic").checked = Boolean(target.hasPhonetic);
+      } else {
+        addModalTitle.textContent = "➕ 새 단어 추가";
+        addModalDesc.textContent = "추가한 단어는 현재 브라우저에 저장되며, 'JSON 내보내기'로 파일 백업할 수 있습니다.";
+        saveWordSubmitBtn.textContent = "단어 저장";
+        document.getElementById("newPos").value = "명사";
+      }
+
+      addModalBackdrop.classList.add("open");
+      setTimeout(() => document.getElementById("newKanji").focus(), 20);
+    }
+
+    function deleteCustomWordByIndex(idx) {
+      const target = customWords[idx];
+      if (!target) return;
+      const ok = confirm(`'${target.kanji} (${target.kana})' 단어를 삭제할까요?`);
+      if (!ok) return;
+
+      customWords.splice(idx, 1);
+      safeSet(STORAGE_KEYS.customWords, customWords);
+
+      if (bookmarks.has(target.kanji)) {
+        bookmarks.delete(target.kanji);
+        safeSet(STORAGE_KEYS.bookmarks, Array.from(bookmarks));
+      }
+      if (masteryMap[target.kanji]) {
+        delete masteryMap[target.kanji];
+        safeSet(STORAGE_KEYS.mastery, masteryMap);
+      }
+
+      renderCustomManageList();
+      applyFilter();
+    }
+
+    function renderCustomManageList() {
+      updateVocabSummary();
+      customManageList.innerHTML = "";
+
+      if (customWords.length === 0) {
+        const emptyDiv = document.createElement("div");
+        emptyDiv.className = "empty-custom-msg";
+        emptyDiv.textContent = "아직 추가한 단어가 없습니다. '새 단어 추가' 버튼으로 나만의 단어를 등록해 보세요.";
+        customManageList.appendChild(emptyDiv);
+        return;
+      }
+
+      customWords.forEach((word, idx) => {
+        const row = document.createElement("div");
+        row.className = "custom-item-row";
+
+        const info = document.createElement("div");
+        info.className = "custom-item-info";
+
+        const title = document.createElement("div");
+        title.className = "custom-item-title";
+        title.textContent = `${word.kanji} (${word.kana} · ${word.kr})`;
+
+        const sub = document.createElement("div");
+        sub.className = "custom-item-sub";
+        sub.textContent = `${word.meaning} | ${word.pos || "명사"}`;
+
+        info.appendChild(title);
+        info.appendChild(sub);
+
+        const actions = document.createElement("div");
+        actions.className = "custom-item-actions";
+
+        const editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.textContent = "✏️ 편집";
+        editBtn.addEventListener("click", () => {
+          manageModalBackdrop.classList.remove("open");
+          openWordEditorModal(idx);
+        });
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "btn-danger-outline";
+        delBtn.textContent = "🗑️ 삭제";
+        delBtn.addEventListener("click", () => {
+          deleteCustomWordByIndex(idx);
+        });
+
+        actions.appendChild(editBtn);
+        actions.appendChild(delBtn);
+
+        row.appendChild(info);
+        row.appendChild(actions);
+        customManageList.appendChild(row);
+      });
+    }
+
+    openAddModalBtn.addEventListener("click", () => openWordEditorModal(-1));
+
+    openManageModalBtn.addEventListener("click", () => {
+      renderCustomManageList();
+      manageModalBackdrop.classList.add("open");
+    });
+    closeManageModalBtn.addEventListener("click", () => {
+      manageModalBackdrop.classList.remove("open");
+    });
+    addFromManageBtn.addEventListener("click", () => {
+      manageModalBackdrop.classList.remove("open");
+      openWordEditorModal(-1);
+    });
+    manageModalBackdrop.addEventListener("click", (e) => {
+      if (e.target === manageModalBackdrop) {
+        manageModalBackdrop.classList.remove("open");
+      }
+    });
+
+    cardEditCustomBtn.addEventListener("click", () => {
+      const currentItem = currentList[currentIndex];
+      const idx = customWords.findIndex(w => w.kanji === currentItem.kanji);
+      if (idx >= 0) openWordEditorModal(idx);
+    });
+
+    cardDeleteCustomBtn.addEventListener("click", () => {
+      const currentItem = currentList[currentIndex];
+      const idx = customWords.findIndex(w => w.kanji === currentItem.kanji);
+      if (idx >= 0) deleteCustomWordByIndex(idx);
+    });
+
+    cancelAddModalBtn.addEventListener("click", () => {
+      addModalBackdrop.classList.remove("open");
+      editingCustomIndex = -1;
+    });
+    addModalBackdrop.addEventListener("click", (e) => {
+      if (e.target === addModalBackdrop) {
+        addModalBackdrop.classList.remove("open");
+        editingCustomIndex = -1;
+      }
+    });
+
+    addWordForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const kanji = document.getElementById("newKanji").value.trim();
+      const kana = document.getElementById("newKana").value.trim();
+      const kr = document.getElementById("newKr").value.trim();
+      const pos = document.getElementById("newPos").value.trim() || "명사";
+      const acceptsRaw = document.getElementById("newAccepts").value.trim();
+      const meaning = document.getElementById("newMeaning").value.trim();
+      const phoneticNote = document.getElementById("newPhonetic").value.trim() || "장음·촉음 발음 박자에 유의하세요.";
+      const structureRaw = document.getElementById("newStructure").value.trim();
+      const mnemonic = document.getElementById("newMnemonic").value.trim() || "소리 내어 반복해서 읽으며 연상하세요.";
+      const hasPhonetic = document.getElementById("newHasPhonetic").checked;
+
+      if (!kanji || !kana || !kr || !meaning) return;
+
+      const extraAccepts = acceptsRaw
+        ? acceptsRaw.split(",").map(s => s.trim()).filter(Boolean)
+        : [];
+      const accepts = Array.from(new Set([kr, ...extraAccepts]));
+
+      const structureLines = structureRaw
+        ? structureRaw.split(/\n+/).map(s => s.trim()).filter(Boolean)
+        : [`표기: ${kanji} / 읽기: ${kana}`];
+
+      const entryData = {
+        kanji,
+        kana,
+        kr,
+        accepts,
+        meaning,
+        pos,
+        tags: ["CUSTOM"],
+        hasPhonetic,
+        phoneticNote,
+        structure: structureLines,
+        mnemonic
+      };
+
+      if (editingCustomIndex >= 0 && customWords[editingCustomIndex]) {
+        const oldKanji = customWords[editingCustomIndex].kanji;
+        customWords[editingCustomIndex] = entryData;
+        if (oldKanji !== kanji) {
+          if (bookmarks.has(oldKanji)) {
+            bookmarks.delete(oldKanji);
+            bookmarks.add(kanji);
+            safeSet(STORAGE_KEYS.bookmarks, Array.from(bookmarks));
+          }
+          if (masteryMap[oldKanji]) {
+            masteryMap[kanji] = masteryMap[oldKanji];
+            delete masteryMap[oldKanji];
+            safeSet(STORAGE_KEYS.mastery, masteryMap);
+          }
+        }
+        safeSet(STORAGE_KEYS.customWords, customWords);
+        editingCustomIndex = -1;
+        addModalBackdrop.classList.remove("open");
+        alert(`'${kanji}' 단어가 수정되었습니다!`);
+      } else {
+        customWords.push(entryData);
+        safeSet(STORAGE_KEYS.customWords, customWords);
+        addModalBackdrop.classList.remove("open");
+        alert(`'${kanji}' 단어가 추가되었습니다!`);
+      }
+
+      addWordForm.reset();
+      document.getElementById("newPos").value = "명사";
+      applyFilter();
+    });
+
+    // JSON 내보내기
+    exportJsonBtn.addEventListener("click", () => {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        customWords,
+        bookmarks: Array.from(bookmarks),
+        masteryMap
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `japanese-kanji-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // JSON 불러오기
+    importJsonBtn.addEventListener("click", () => {
+      importFileInput.click();
+    });
+    importFileInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || "{}"));
+          if (Array.isArray(parsed.customWords)) {
+            const existingKeys = new Set(customWords.map(w => w.kanji));
+            parsed.customWords.forEach(w => {
+              if (w && w.kanji && !existingKeys.has(w.kanji)) {
+                customWords.push({ ...w, tags: Array.from(new Set([...(w.tags || []), "CUSTOM"])) });
+                existingKeys.add(w.kanji);
+              }
+            });
+            safeSet(STORAGE_KEYS.customWords, customWords);
+          }
+          if (Array.isArray(parsed.bookmarks)) {
+            parsed.bookmarks.forEach(k => bookmarks.add(k));
+            safeSet(STORAGE_KEYS.bookmarks, Array.from(bookmarks));
+          }
+          if (parsed.masteryMap && typeof parsed.masteryMap === "object") {
+            masteryMap = { ...masteryMap, ...parsed.masteryMap };
+            safeSet(STORAGE_KEYS.mastery, masteryMap);
+          }
+          alert("JSON 데이터를 성공적으로 불러왔습니다!");
+          applyFilter();
+        } catch (err) {
+          alert("올바른 JSON 백업 파일이 아닙니다.");
+        }
+      };
+      reader.readAsText(file);
+      importFileInput.value = "";
+    });
+
+    // 이벤트 리스너
+    quizForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      handleSubmit();
+    });
+
+    answerInput.addEventListener("keydown", (e) => {
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit();
+      }
+    });
+
+    ttsBtn.addEventListener("click", () => {
+      const item = currentList[currentIndex];
+      speakJapanese(item.ttsKana || item.kana || item.kanji);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (addModalBackdrop.classList.contains("open")) {
+          addModalBackdrop.classList.remove("open");
+          editingCustomIndex = -1;
+          return;
+        }
+        if (manageModalBackdrop.classList.contains("open")) {
+          manageModalBackdrop.classList.remove("open");
+          return;
+        }
+      }
+      if (addModalBackdrop.classList.contains("open") || manageModalBackdrop.classList.contains("open")) return;
+      const activeTag = document.activeElement && document.activeElement.tagName;
+      if (activeTag === "INPUT" || activeTag === "TEXTAREA" || activeTag === "SELECT") return;
+
+      if (isAnswered && (e.key === "r" || e.key === "R" || e.key === "ㄱ")) {
+        e.preventDefault();
+        const item = currentList[currentIndex];
+        speakJapanese(item.ttsKana || item.kana || item.kanji);
+      }
+    });
+
+    nextBtn.addEventListener("click", goNext);
+    categorySelect.addEventListener("change", applyFilter);
+
+    orderToggle.addEventListener("click", () => {
+      isRandom = !isRandom;
+      orderToggle.textContent = isRandom ? "🔀 랜덤 출제" : "🔢 순차 출제";
+      orderToggle.classList.toggle("active", !isRandom);
+      applyFilter();
+    });
+
+    bookmarkBtn.addEventListener("click", () => {
+      const kanji = currentList[currentIndex].kanji;
+      if (bookmarks.has(kanji)) {
+        bookmarks.delete(kanji);
+      } else {
+        bookmarks.add(kanji);
+      }
+      safeSet(STORAGE_KEYS.bookmarks, Array.from(bookmarks));
+      updateBookmarkButton(kanji);
+    });
+
+    // 초기화
+    applyFilter();
+  </script>
+</body>
+</html>
